@@ -169,6 +169,7 @@ function lgit() {
 }
 
 function bak_pref() {
+	[[ -d ~/Documents/dotfiles ]] || exit
 	cp -ar ~/.zshrc ~/Documents/dotfiles/zshrc
 	cp -ar ~/.vimrc ~/Documents/dotfiles/vimrc
 	cd ~/Documents/dotfiles
