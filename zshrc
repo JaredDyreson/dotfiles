@@ -134,7 +134,7 @@ function pmark() {
 		pandoc "$element" --listings -H "$HOME"/Documents/latex_formatting/coding.tex --variable urlcolor=blue -V fontsize=11pt -o "$var".pdf
 	done
 	# switch case statement reading from ENV variable to determine how to compile
-
+	
 	
 }
 
@@ -162,5 +162,18 @@ function collate_documents() {
 
 function install() {
 	sudo apt-get install "$@" -y
+}
+function lgit() {
+	# find all the git repos in a given home folder
+	sudo find "$HOME" -type d -name '.git'
+}
+
+function bak_pref() {
+	cp -ar ~/.zshrc ~/Documents/dotfiles/zshrc
+	cp -ar ~/.vimrc ~/Documents/dotfiles/vimrc
+	cd ~/Documents/dotfiles
+	git add *
+	git commit -m "Automatic backup performed"
+	git push origin master
 }
 
