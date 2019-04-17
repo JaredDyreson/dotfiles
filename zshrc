@@ -129,13 +129,21 @@ function mtpdf() {
 }
 
 function pmark() {
+	# user submitted templates for Pandoc
+	# https://github.com/jgm/pandoc/wiki/User-contributed-templates
+	[[ ! -d exported ]] || mkdir exported
 	for element in "$@"; do
 		var="$element:t:r"
-		pandoc "$element" --listings -H "$HOME"/Documents/latex_formatting/coding.tex --variable urlcolor=blue -V fontsize=11pt -o "$var".pdf
+		case "$C" in
+			notes)
+				pandoc "$element" -o "$var".pdf --from markdown --template notes --listings --variable urlcolor=blue
+				;;
+			coding)
+				pandoc "$element" --listings -H ~/.pandoc/templates/coding.latex --variable urlcolor=blue -V fontsize=11pt -o "$var".pdf
+#				pandoc "$element" -o "$var".pdf --from markdown --template coding --listings --variable urlcolor=blue
+				;;
+		esac
 	done
-	# switch case statement reading from ENV variable to determine how to compile
-	
-	
 }
 
 function respring_iphone() {
@@ -177,4 +185,5 @@ function bak_pref() {
 	git commit -m "Automatic backup performed"
 	git push origin master
 }
+
 
