@@ -64,4 +64,12 @@ inoremap <C-Y> <C-O><C-R>
 
 " Make run
 map <F8> :w <CR> !make <CR>
+
 "" Giving VIM a solarized dark look
+
+"" allow for line numbers
+set number
+
+"" Spell Checking
+autocmd BufRead,BufNewFile *.md setlocal spell
+set complete+=kspell

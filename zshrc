@@ -1,3 +1,5 @@
+# NO HISTORY SHARING, FUCKING ANNOYING
+setopt no_share_history
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -136,10 +138,10 @@ function pmark() {
 		var="$element:t:r"
 		case "$C" in
 			notes)
-				pandoc "$element" -o "$var".pdf --from markdown --template notes --listings --variable urlcolor=blue
+				pandoc "$element" --toc -o "$var".pdf --from markdown --template notes --listings --variable urlcolor=blue
 				;;
 			coding)
-				pandoc "$element" --listings -H ~/.pandoc/templates/coding.latex --variable urlcolor=blue -V fontsize=11pt -o "$var".pdf
+				pandoc "$element" --toc --listings -H ~/.pandoc/templates/coding.latex --variable urlcolor=blue -V fontsize=11pt -o "$var".pdf
 #				pandoc "$element" -o "$var".pdf --from markdown --template coding --listings --variable urlcolor=blue
 				;;
 		esac
@@ -186,4 +188,13 @@ function bak_pref() {
 	git push origin master
 }
 
+function notes() {
+	# this is a large and on going program I am writing to compile my notes
+	DOC_COUNT=$(find . -type f -iname '*.md' | wc -l)
+	# find all titles
+	grep '^[^\#]*\#[^\#]*$' file.md
+	# this will find the date given the format mm/dd/yyyy
+	grep -Eio '[0-1][0-9]\/[0-3][0-9]\/[0-9]{4}' Westward\ Expansion\ and\ the\ Sectional\ Crisis.md
+	# grep for pdf lisitngs, attempt to split the pdf into images and embed them into the markdown file
 
+}
