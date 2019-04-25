@@ -131,19 +131,28 @@ function mtpdf() {
 }
 
 function pmark() {
+	# Pandoc to Laetx Workflow for MLA Style --> http://barbaratozier.com/pandoc-to-latex-workflow/
 	# user submitted templates for Pandoc
 	# https://github.com/jgm/pandoc/wiki/User-contributed-templates
-	[[ ! -d exported ]] || mkdir exported
+	[[ -d exported ]] || mkdir exported
+#	find . -type f -iname '*.pdf' -exec mv {} -t exported \;
+	# find all documents in a given folder, pipe to one file and export to master document (documents should be in numeric order to improve accuracy(
+	# find . -type f -iname '*.md' | while read line; do cat "$line" >> master; done; C=notes pmark master
 	for element in "$@"; do
 		var="$element:t:r"
 		case "$C" in
 			notes)
-				pandoc "$element" --toc -o "$var".pdf --from markdown --template notes --listings --variable urlcolor=blue
+				pandoc "$element" --toc --from markdown --template notes --listings --variable urlcolor=blue -o exported/"$var".pdf 
 				;;
 			coding)
-				pandoc "$element" --toc --listings -H ~/.pandoc/templates/coding.latex --variable urlcolor=blue -V fontsize=11pt -o "$var".pdf
-#				pandoc "$element" -o "$var".pdf --from markdown --template coding --listings --variable urlcolor=blue
+				pandoc "$element" --toc --listings -H ~/.pandoc/templates/coding.latex --variable urlcolor=blue -V fontsize=11pt -o exported/"$var"
 				;;
+			worksheet)
+				pandoc "$element" -o exported/"$var" --from markdown --template notes --listings --variable urlcolor=blue
+				;;
+			essay)
+				pandoc "$element" -o exported/"$var"
+
 		esac
 	done
 }
@@ -198,3 +207,16 @@ function notes() {
 	# grep for pdf lisitngs, attempt to split the pdf into images and embed them into the markdown file
 
 }
+#alias cd="cd $@ && ls ."
+
+function catenate_notes {
+	[[ -d "$PWD"/assets ]] || mkdir "$PWD"/assets
+	find . -type f -iname '*.md' | while read line; do 
+		echo "$line" | sed 's/^\.\///g'
+	done | sort | while read file; do
+			 parent=$(dirname -- "./$file")
+			 find "$parent" -type d -iname 'assets' -exec cp {}/* -t "$PWD"/assets \;
+			 cat "$file"
+		       done > Final.txt
+}
+alias new_essay="cp -ar ~/Documents/MLA_Template.tex ."

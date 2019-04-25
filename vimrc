@@ -12,7 +12,7 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'nathanaelkane/vim-indent-guides'
-
+Plugin 'xuhdev/vim-latex-live-preview'
 
 call vundle#end()
 "filetype plugin indent on
