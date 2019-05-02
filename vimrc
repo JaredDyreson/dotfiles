@@ -13,6 +13,7 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'xuhdev/vim-latex-live-preview'
+Plugin 'jiangmiao/auto-pairs'
 
 call vundle#end()
 "filetype plugin indent on
@@ -73,3 +74,6 @@ set number
 "" Spell Checking
 autocmd BufRead,BufNewFile *.md setlocal spell
 set complete+=kspell
+
+"" Save and compile markdown
+" autocmd BufWritePost *.md !C=notes pmark %:p 
