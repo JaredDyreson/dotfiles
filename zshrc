@@ -170,6 +170,10 @@ function bak_pref() {
 	git add *
 	git commit -m "Automatic backup performed"
 	git push origin master
+	cd ~/scripts
+	git add *
+	git commit -m "Automatically backing up scripts"
+	git push origin master
 	cd "$prev"
 }
 

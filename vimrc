@@ -77,3 +77,5 @@ set complete+=kspell
 
 "" Save and compile markdown
 " autocmd BufWritePost *.md !C=notes pmark %:p 
+
+"" Markdown autcomplete star character
