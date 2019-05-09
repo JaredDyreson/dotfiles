@@ -116,7 +116,18 @@ alias "source ~/.bashrc"="echo Nope"
 alias conv="convertTextToPDF"
 alias uptime="uptime -p"
 alias upgrade="sudo apt-get update && sudo apt-get upgrade -y"
-alias x="xdg-open . > /dev/null 2>&1 & disown"
+#alias x="xdg-open . > /dev/null 2>&1 & disown"
+
+function x() {
+	if [[ $# -eq 0 ]]; then 
+		xdg-open . > /dev/null 2>&1 & disown
+	else
+		for element in "$@"; do
+		#	[[ ! -d "$element" && ! -f "$element" ]] continue
+			xdg-open "$element" . > /dev/null 2>&1 & disown
+		done
+	fi
+}
 
 
 # defined functions that would not fit in a simple alias command
