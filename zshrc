@@ -216,3 +216,5 @@ alias new_essay="cp -ar ~/Documents/MLA_Template.tex ."
 # link -> https://dougblack.io/words/zsh-vi-mode.html
 
 # Vim and TMUX love child -> https://github.com/christoomey/vim-tmux-navigator
+
+
