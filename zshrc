@@ -211,3 +211,8 @@ function catenate_notes {
 		       done > Final.txt
 }
 alias new_essay="cp -ar ~/Documents/MLA_Template.tex ."
+
+# VIM Keybindings in ZSH
+# link -> https://dougblack.io/words/zsh-vi-mode.html
+
+# Vim and TMUX love child -> https://github.com/christoomey/vim-tmux-navigator

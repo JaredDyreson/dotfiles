@@ -75,7 +75,4 @@ set number
 autocmd BufRead,BufNewFile *.md setlocal spell
 set complete+=kspell
 
-"" Save and compile markdown
-" autocmd BufWritePost *.md !C=notes pmark %:p 
 
-"" Markdown autcomplete star character
