@@ -80,7 +80,7 @@ source $ZSH/oh-my-zsh.sh
  if [[ -n $SSH_CONNECTION ]]; then
    export EDITOR='vim'
  else
-   export EDITOR='nano'
+   export EDITOR='vim'
  fi
 
 # Compilation flags
@@ -217,4 +217,9 @@ alias new_essay="cp -ar ~/Documents/MLA_Template.tex ."
 
 # Vim and TMUX love child -> https://github.com/christoomey/vim-tmux-navigator
 
+export RANGER_LOAD_DEFAULT_RC=false
+VISUAL=editor; export VISUAL EDITOR=vim; export EDITOR
+export SPOTIPY_CLIENT_ID='d2697e8198c449f09abd2e0833f48dff'
+export SPOTIPY_CLIENT_SECRET='862367c3080d49e782de1bd74641b876'
+export SPOTIPY_REDIRECT_URI='http://localhost:8888'
 

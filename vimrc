@@ -20,6 +20,10 @@ call vundle#end()
 filetype indent on
 syntax on
 set autoindent
+syntax enable
+"colorscheme solarized
+"let g:solarized_termcolors=256
+"set t_Co=16
 
 " This is so I can have proper copy pasting format
 
