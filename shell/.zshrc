@@ -177,7 +177,7 @@ function bak_pref() {
 	[[ -d ~/Documents/dotfiles ]] || exit
 	cp -ar ~/.zshrc ~/Documents/dotfiles/shell/
 	cp -ar ~/.vimrc ~/Documents/dotfiles/shell
-	dconf dump /org/gnome/terminal >> ~/Documents/dotfiles/terminal/profile_settings
+	dconf dump /org/gnome/terminal/ >> ~/Documents/dotfiles/terminal/profile_settings
 	cd ~/Documents/dotfiles
 	git add *
 	git commit -m "Automatic backup performed"
