@@ -50,3 +50,29 @@ background-color='#0d0d19192626'
 
 [legacy]
 schema-version=uint32 3
+[legacy/profiles:]
+list=['84825228-820e-4b1e-939a-34877703043f']
+
+[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+use-theme-transparency=false
+
+[legacy/profiles:/:84825228-820e-4b1e-939a-34877703043f]
+foreground-color='#b4b4e1e1fdfd'
+visible-name='Aci'
+login-shell=true
+palette=['rgb(54,54,54)', 'rgb(255,8,131)', 'rgb(131,255,8)', 'rgb(255,131,8)', 'rgb(8,131,255)', 'rgb(171,110,233)', 'rgb(88,107,133)', 'rgb(182,182,182)', 'rgb(66,66,66)', 'rgb(255,30,142)', 'rgb(142,255,30)', 'rgb(255,142,30)', 'rgb(30,142,255)', 'rgb(170,104,235)', 'rgb(88,107,133)', 'rgb(194,194,194)']
+custom-command='zsh'
+cursor-shape='underline'
+use-custom-command=true
+use-theme-colors=false
+use-system-font=true
+use-transparent-background=true
+font='EB Garamond 13'
+allow-bold=true
+use-theme-background=false
+bold-color-same-as-fg=true
+bold-color='#b4b4e1e1fdfd'
+background-color='#0d0d19192626'
+
+[legacy]
+schema-version=uint32 3

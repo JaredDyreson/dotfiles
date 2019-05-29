@@ -175,8 +175,9 @@ function lgit() {
 function bak_pref() {
 	prev="$PWD"
 	[[ -d ~/Documents/dotfiles ]] || exit
-	cp -ar ~/.zshrc ~/Documents/dotfiles/zshrc
-	cp -ar ~/.vimrc ~/Documents/dotfiles/vimrc
+	cp -ar ~/.zshrc ~/Documents/dotfiles/shell/zshrc
+	cp -ar ~/.vimrc ~/Documents/dotfiles/shell/vimrc
+	dconf dump /org/gnome/terminal/ >> ~/Documents/dotfiles/terminal/profile_settings
 	cd ~/Documents/dotfiles
 	git add *
 	git commit -m "Automatic backup performed"
