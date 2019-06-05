@@ -106,7 +106,7 @@ git config --global credential.helper 'cache --timeout=3600'
 export PAGER="most"
 export ZSH_THEME="common"
 PATH=$PATH$(find "$HOME/scripts" -type d -not -path '*/\.*' -printf ":%p")
-
+PATH=$PATH"~/.vim/bundle/vim-live-latex-preview/bin"
 # Functions and aliases
 
 alias ..="cd .."
@@ -175,9 +175,19 @@ function lgit() {
 function bak_pref() {
 	prev="$PWD"
 	[[ -d ~/Documents/dotfiles ]] || exit
+	# shell
 	cp -ar ~/.zshrc ~/Documents/dotfiles/shell/zshrc
 	cp -ar ~/.vimrc ~/Documents/dotfiles/shell/vimrc
+
+	# terminal
+
 	dconf dump /org/gnome/terminal/ > ~/Documents/dotfiles/terminal/profile_settings
+
+	# terminal applications
+
+	cp -ar ~/.config/ranger/rc.conf ~/Documents/dotfiles/ranger
+	cp -ar ~/.config/ranger/rifle.conf ~/Documents/dotfiles/ranger
+
 	cd ~/Documents/dotfiles
 	git add *
 	git commit -m "Automatic backup performed"
@@ -224,3 +234,6 @@ export SPOTIPY_CLIENT_ID='d2697e8198c449f09abd2e0833f48dff'
 export SPOTIPY_CLIENT_SECRET='862367c3080d49e782de1bd74641b876'
 export SPOTIPY_REDIRECT_URI='http://localhost:8888'
 
+alias gh="cd ~"
+alias sz="source ~/.zshrc"
+alias vrc="vim ~/.vimrc"

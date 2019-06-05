@@ -12,48 +12,17 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'ying17zi/vim-live-latex-preview'
 
 call vundle#end()
-"filetype plugin indent on
+
 filetype indent on
 syntax on
 set autoindent
 syntax enable
-"colorscheme solarized
-"let g:solarized_termcolors=256
-"set t_Co=16
-
-" This is so I can have proper copy pasting format
-
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
-
-" Moving text up and down while holding shift
-nnoremap <S-Up> :m-2<CR>
-nnoremap <S-Down> :m+<CR>
-inoremap <S-Up> <Esc>:m-2<CR>
-inoremap <S-Down> <Esc>:m+<CR>
-
-" Getting essential IDE features into vim wihtout the bloat -> https://realpython.com/vim-and-python-a-match-made-in-heaven/
-
-" Allow for UTF-8 Support
-set encoding=utf-8
-
-" Autocomplete
-Bundle 'Valloric/YouCompleteMe'
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+set number " Allow for line numbering
+set encoding=utf-8 "Allow for UTF-8 Support 
 
 " Moving through the files
 inoremap <S-Tab> <C-d>
@@ -67,16 +36,100 @@ nnoremap <C-Y> <C-R>
 inoremap <C-Z> <C-O>u
 inoremap <C-Y> <C-O><C-R>
 
-" Make run
-map <F8> :w <CR> !make <CR>
+"This is so I can have proper copy pasting format
 
-"" Giving VIM a solarized dark look
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
 
-"" allow for line numbers
-set number
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+
+" Moving text up and down while holding shift
+nnoremap <S-Up> :m-2<CR>
+nnoremap <S-Down> :m+<CR>
+inoremap <S-Up> <Esc>:m-2<CR>
+inoremap <S-Down> <Esc>:m+<CR>
+
+" PROGRAMMING
+
+" CPP
+" These were inspired by Luke Smith's LaTeX scripts found below
+
+autocmd FileType cpp inoremap ,m #include<iostream><Enter><Enter>int main(int argc, char *argv[]){<Enter><++><Enter><C-d>return 0;<Enter>}<ESC>i
+autocmd FileType cpp inoremap ,sc std::cout << <++> << std::endl;
+
+" Make run from Vim (gcc, clang, jcomp, pdflatex)
+set autowrite
+autocmd FileType cpp nnoremap <buffer> <C-c> :!clear && clang++-6.0 -std=c++17 % -g -o %:r.out && ./%:r.out <Enter>
+autocmd FileType tex nnoremap <buffer> <C-c> :!pdflatex % -o %:r.pdf && xreader %:r.pdf <Enter>
+autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
+autocmd FileType c nnoremap <buffer> <C-c> :!clear && gcc % -o %:r && ./%:r <Enter>
+
+" Push to Github directly from a vim buffer
+nnoremap <C-g> :!commit "$(pwd)" <Enter>
+"Autocomplete for programming languages
+Bundle 'Valloric/YouCompleteMe'
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+
+
+" WORD PROCESSING
+
+" LaTeX
+
+" Navigating with guides
+inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+map <leader><leader> <Esc>/<++><Enter>"_c4l
+
+" Word Count
+autocmd FileType tex map <leader>w :w !detex \| wc -w<CR>
+
+autocmd FileType tex inoremap ,fr \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter><Enter>\end{frame}<Enter><Enter><++><Esc>6kf}i
+autocmd FileType tex inoremap ,fi \begin{fitch}<Enter><Enter>\end{fitch}<Enter><Enter><++><Esc>3kA
+autocmd FileType tex inoremap ,exe \begin{exe}<Enter>\ex<Space><Enter>\end{exe}<Enter><Enter><++><Esc>3kA
+autocmd FileType tex inoremap ,em \emph{}<++><Esc>T{i
+autocmd FileType tex inoremap ,bf \textbf{}<++><Esc>T{i
+autocmd FileType tex vnoremap , <ESC>`<i\{<ESC>`>2la}<ESC>?\\{<Enter>a
+autocmd FileType tex inoremap ,it \textit{}<++><Esc>T{i
+autocmd FileType tex inoremap ,ct \textcite{}<++><Esc>T{i
+autocmd FileType tex inoremap ,cp \parencite{}<++><Esc>T{i
+autocmd FileType tex inoremap ,glos {\gll<Space><++><Space>\\<Enter><++><Space>\\<Enter>\trans{``<++>''}}<Esc>2k2bcw
+autocmd FileType tex inoremap ,x \begin{xlist}<Enter>\ex<Space><Enter>\end{xlist}<Esc>kA<Space>
+autocmd FileType tex inoremap ,ol \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><Enter><++><Esc>3kA\item<Space>
+autocmd FileType tex inoremap ,ul \begin{itemize}<Enter><Enter>\end{itemize}<Enter><Enter><++><Esc>3kA\item<Space>
+autocmd FileType tex inoremap ,li <Enter>\item<Space>
+autocmd FileType tex inoremap ,ref \ref{}<Space><++><Esc>T{i
+autocmd FileType tex inoremap ,tab \begin{tabular}<Enter><++><Enter>\end{tabular}<Enter><Enter><++><Esc>4kA{}<Esc>i
+autocmd FileType tex inoremap ,ot \begin{tableau}<Enter>\inp{<++>}<Tab>\const{<++>}<Tab><++><Enter><++><Enter>\end{tableau}<Enter><Enter><++><Esc>5kA{}<Esc>i
+autocmd FileType tex inoremap ,can \cand{}<Tab><++><Esc>T{i
+autocmd FileType tex inoremap ,con \const{}<Tab><++><Esc>T{i
+autocmd FileType tex inoremap ,v \vio{}<Tab><++><Esc>T{i
+autocmd FileType tex inoremap ,a \href{}{<++>}<Space><++><Esc>2T{i
+autocmd FileType tex inoremap ,sc \textsc{}<Space><++><Esc>T{i
+autocmd FileType tex inoremap ,chap \chapter{}<Enter><Enter><++><Esc>2kf}i
+autocmd FileType tex inoremap ,sec \section{}<Enter><Enter><++><Esc>2kf}i
+autocmd FileType tex inoremap ,ssec \subsection{}<Enter><Enter><++><Esc>2kf}i
+autocmd FileType tex inoremap ,sssec \subsubsection{}<Enter><Enter><++><Esc>2kf}i
+autocmd FileType tex inoremap ,st <Esc>F{i*<Esc>f}i
+autocmd FileType tex inoremap ,beg \begin{DELRN}<Enter><++><Enter>\end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>DELRN<Enter>c
+autocmd FileType tex inoremap ,up <Esc>/usepackage<Enter>o\usepackage{}<Esc>i
+autocmd FileType tex nnoremap ,up /usepackage<Enter>o\usepackage{}<Esc>i
+autocmd FileType tex inoremap ,tt \texttt{}<Space><++><Esc>T{i
+autocmd FileType tex inoremap ,bt {\blindtext}
+autocmd FileType tex inoremap ,nu $\varnothing$
+autocmd FileType tex inoremap ,col \begin{columns}[T]<Enter>\begin{column}{.5\textwidth}<Enter><Enter>\end{column}<Enter>\begin{column}{.5\textwidth}<Enter><++><Enter>\end{column}<Enter>\end{columns}<Esc>5kA
+autocmd FileType tex inoremap ,rn (\ref{})<++><Esc>F}i
+autocmd FileType tex inoremap ,cs \begin{verbatim}<Enter><++><Enter>\end{verbatim}<Enter>
+" Markdown
 
 "" Spell Checking
 autocmd BufRead,BufNewFile *.md setlocal spell
 set complete+=kspell
-
-
