@@ -1,0 +1,10 @@
+[Unit]
+Description=Power-off dGPU
+After=graphical.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "echo '\\_SB.PCI0.PEG0.PEGP._OFF' > /proc/acpi/call; cat /proc/acpi/call > /tmp/nvidia-off"
+
+[Install]
+WantedBy=graphical.target

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+[[ -z "$1" || ! -f "$1" ]] && (echo "[+] Cannot proceeed"; exit)	
+
+patch -Np1 -i "$@"
