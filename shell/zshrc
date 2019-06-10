@@ -250,14 +250,7 @@ CURRENT=$(date +"%d %B %Y")
 function na() {
 	[[ -z "$1" ]] && (echo "[-] Provide name for article";exit)
 	cp -ar ~/Projects/university/LaTeX\ Templates/MLA_Template.tex ./"$1".tex
-#	sed -i "s/CURRENT\ DATE/"$CURRENT"/g;/62s/[<][+][+][>]/"$1"/" "$1".tex
 	perl -i -pe "s/.*/$1/ if $.==62;s/CURRENT\ DATE/$CURRENT/" "$1".tex
 	vim "$1".tex
 }
 
-function make_run_tex(){
-	[[ ! -f "$1" ]] && (echo "[-] Cannot open file at: $1, cowardly refusing";exit)
-	pdflatex "$1" -o "$1:t:r".pdf
-	latexmk -silent -c
-	xreader "$1" > /dev/null 2>&1 & disown 
-}	
