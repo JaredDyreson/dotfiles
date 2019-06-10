@@ -68,6 +68,11 @@ ENABLE_CORRECTION="true"
 plugins=(git reminder)
 
 source $ZSH/oh-my-zsh.sh
+case "$TERM" in
+	rxvt|*term)
+		PROMPT_COMMAND='echo -ne "\033]0;$PWD\007"'
+	;;
+esac
 
 # User configuration
 
@@ -236,4 +241,16 @@ export SPOTIPY_REDIRECT_URI='http://localhost:8888'
 
 alias gh="cd ~"
 alias sz="source ~/.zshrc"
+alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
+alias gu="cd ~/Projects/university"
+#alias pdfsize="pdfinfo "$1" | gawk '/File size/ {byte=$3/1024/1024; print byte " GB"}'"
+# new article
+CURRENT=$(date +"%d %B %Y")
+function na() {
+	[[ -z "$1" ]] && (echo "[-] Provide name for article";exit)
+	cp -ar ~/Projects/university/LaTeX\ Templates/MLA_Template.tex ./"$1".tex
+#	sed -i "s/CURRENT\ DATE/"$CURRENT"/g;/62s/[<][+][+][>]/"$1"/" "$1".tex
+	perl -i -pe "s/.*/$1/ if $.==62;s/CURRENT\ DATE/$CURRENT/" "$1".tex
+	vim "$1".tex
+}
