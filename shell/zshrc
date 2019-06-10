@@ -254,3 +254,10 @@ function na() {
 	perl -i -pe "s/.*/$1/ if $.==62;s/CURRENT\ DATE/$CURRENT/" "$1".tex
 	vim "$1".tex
 }
+
+function make_run_tex(){
+	[[ ! -f "$1" ]] && (echo "[-] Cannot open file at: $1, cowardly refusing";exit)
+	pdflatex "$1" -o "$1:t:r".pdf
+	latexmk -silent -c
+	xreader "$1" > /dev/null 2>&1 & disown 
+}	

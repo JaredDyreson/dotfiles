@@ -72,7 +72,8 @@ autocmd FileType cpp inoremap ,lh #include "<++>"<ESC>i
 
 set autowrite
 autocmd FileType cpp nnoremap <buffer> <C-c> :!clear && clang++-6.0 -std=c++17 % -g -o %:r.out && ./%:r.out <Enter>
-autocmd FileType tex nnoremap <buffer> <C-c> :!pdflatex "%" -o "%:r".pdf && xreader "%:r".pdf <Enter>
+autocmd FileType tex nnoremap <buffer> <C-c> :!make_run_latex "%" <Enter>
+"pdflatex "%" -o "%:r".pdf && xreader "%:r".pdf <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
 autocmd FileType c nnoremap <buffer> <C-c> :!clear && gcc % -o %:r && ./%:r <Enter>
 nnoremap <C-m> :!clear && make all <Enter>
