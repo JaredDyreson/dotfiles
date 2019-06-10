@@ -254,3 +254,9 @@ function na() {
 	vim "$1".tex
 }
 
+function napa(){
+	[[ -z "$1" ]] && (echo "[-] Provide name for article";exit)
+	cp -ar ~/Projects/university/LaTeX\ Templates/APA_Template.tex ./"$1".tex
+	perl -i -pe "s/.*/\\\title\{"$1"\}/ if $.==55" ./"$1".tex
+	vim "$1".tex
+}
