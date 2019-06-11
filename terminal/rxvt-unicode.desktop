@@ -1,16 +1,24 @@
 [Desktop Entry]
-Name=Rxvt Color Unicode Terminal
-Comment=Use the command line
+Name=urxvt
+Comment=Use the command line proper
+Keywords=shell;prompt;command;commandline;cmd;
 TryExec=urxvt
 Exec=urxvt
-Icon=terminal
+Icon=utilities-terminal
 Type=Application
-Categories=Utility;TerminalEmulator;
+X-GNOME-DocPath=gnome-terminal/index.html
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=gnome-terminal
+X-GNOME-Bugzilla-Component=BugBuddyBugs
+X-GNOME-Bugzilla-Version=3.18.3
+Categories=GNOME;GTK;System;TerminalEmulator;
 StartupNotify=true
-Keywords=Run;
+X-GNOME-SingleWindow=false
+OnlyShowIn=GNOME;Unity;X-Cinnamon;
 Actions=New
+X-Ubuntu-Gettext-Domain=gnome-terminal
 
 [Desktop Action New]
-Name=New Rxvt Color Unicode Terminal
+Name=New Terminal
 Exec=urxvt
 OnlyShowIn=Unity
