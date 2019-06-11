@@ -4,7 +4,7 @@ URxvt.keysym.Shift-Up: command:\033]720;1\007
 URxvt.keysym.Shift-Down: command:\003]721;1\007
 
 
-! Acai Theme
+!! Acai Theme
 
 URxvt.font: xft:bitstream vera sans mono:size=12
 
