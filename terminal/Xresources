@@ -1,0 +1,40 @@
+URxvt*altSendsEscape: true
+
+URxvt.keysym.Shift-Up: command:\033]720;1\007
+URxvt.keysym.Shift-Down: command:\003]721;1\007
+
+
+! Acai Theme
+
+URxvt.font: xft:bitstream vera sans mono:size=12
+
+URxvt*color0:	#363636
+URxvt*color1:	#ff0883
+URxvt*color2:	#83ff08
+URxvt*color3:	#ff8308
+URxvt*color4:	#0883ff
+URxvt*color5:	#8308ff
+URxvt*color6:	#08ff83
+URxvt*color7:	#b6b6b6
+URxvt*color8:	#424242
+URxvt*color9:	#ff1e8e
+URxvt*color10:	#8eff1e
+URxvt*color11:	#ff8e1e
+URxvt*color12:	#a26cc9
+URxvt*color13:	#a26cc9
+URxvt*color14:	#1eff8e
+URxvt*color15:	#c2c2c2
+
+urxvt*depth: 32
+URxvt.background: [95]#0d1926
+URxvt.foreground: #b4e1fd
+URxvt.cursorUnderline: true
+URxvt.cursorBlink: true
+
+! Copy and Paste
+
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.iso14755: false
+URxvt*geometry: 114x32+360+250 
+!URxvt*iconFile: /home/jared/Pictures/Application\ Icons/notes_app_icon.jpg
