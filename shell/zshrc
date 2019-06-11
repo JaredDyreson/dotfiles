@@ -185,7 +185,7 @@ function bak_pref() {
 
 	# terminal
 
-	cp -ar ~/.Xresources ~/Documents/dotfiles/terminal
+	cp -ar ~/.Xresources ~/Documents/dotfiles/terminal/Xresources
 
 	# terminal applications
 
