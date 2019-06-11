@@ -112,6 +112,10 @@ export PAGER="most"
 export ZSH_THEME="common"
 PATH=$PATH$(find "$HOME/scripts" -type d -not -path '*/\.*' -printf ":%p")
 PATH=$PATH"~/.vim/bundle/vim-live-latex-preview/bin"
+
+# BEGIN PERSONAL EDITS #
+
+
 # Functions and aliases
 
 alias ..="cd .."
@@ -124,14 +128,9 @@ alias upgrade="sudo apt-get update && sudo apt-get upgrade -y"
 #alias x="xdg-open . > /dev/null 2>&1 & disown"
 
 function x() {
-	if [[ $# -eq 0 ]]; then 
-		xdg-open . > /dev/null 2>&1 & disown
-	else
-		for element in "$@"; do
-		#	[[ ! -d "$element" && ! -f "$element" ]] continue
-			xdg-open "$element" . > /dev/null 2>&1 & disown
-		done
-	fi
+	for item in "$@"; do
+		xdg-open "$item" > /dev/null 2>&1 & disown
+	done
 }
 
 
@@ -226,7 +225,6 @@ function catenate_notes {
 			 cat "$file"
 		       done > Final.txt
 }
-alias new_essay="cp -ar ~/Documents/MLA_Template.tex ."
 
 # VIM Keybindings in ZSH
 # link -> https://dougblack.io/words/zsh-vi-mode.html
@@ -244,10 +242,11 @@ alias sz="source ~/.zshrc"
 alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
 alias gu="cd ~/Projects/university"
+alias vx="vim ~/.Xresources"
 #alias pdfsize="pdfinfo "$1" | gawk '/File size/ {byte=$3/1024/1024; print byte " GB"}'"
 # new article
 CURRENT=$(date +"%d %B %Y")
-function na() {
+function nmla() {
 	[[ -z "$1" ]] && (echo "[-] Provide name for article";exit)
 	cp -ar ~/Projects/university/LaTeX\ Templates/MLA_Template.tex ./"$1".tex
 	perl -i -pe "s/.*/$1/ if $.==62;s/CURRENT\ DATE/$CURRENT/" "$1".tex
@@ -260,3 +259,6 @@ function napa(){
 	perl -i -pe "s/.*/\\\title\{"$1"\}/ if $.==55" ./"$1".tex
 	vim "$1".tex
 }
+
+set -g xterm-keys on
+

@@ -16,6 +16,7 @@ use-theme-colors=false
 use-system-font=true
 use-transparent-background=true
 font='EB Garamond 13'
+use-theme-transparency=false
 allow-bold=true
 use-theme-background=false
 bold-color-same-as-fg=true

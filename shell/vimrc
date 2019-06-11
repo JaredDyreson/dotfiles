@@ -1,6 +1,6 @@
 set nocompatible
 filetype off
-
+set background=dark
 " Making sure the vundle settings are working accordingly
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -76,9 +76,15 @@ autocmd FileType tex nnoremap <buffer> <C-c> :!make_run_latex "%" <Enter>
 "pdflatex "%" -o "%:r".pdf && xreader "%:r".pdf <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
 autocmd FileType c nnoremap <buffer> <C-c> :!clear && gcc % -o %:r && ./%:r <Enter>
-nnoremap <C-m> :!clear && make all <Enter>
+"nnoremap <C-m> :!clear && make all <Enter>
 " Push to Github directly from a vim buffer
 nnoremap <C-g> :!commit "$(pwd)" <Enter>
+
+" Run commands for certain files when saved
+autocmd BufWritePost ~/.Xresources !xrdb ~/.Xresources
+autocmd BufWritePost ~/.zshrc !source ~/.zshrc
+autocmd BufWritePost *.tex !make_run_latex "%"
+
 "Autocomplete for programming languages
 Bundle 'Valloric/YouCompleteMe'
 let g:ycm_autoclose_preview_window_after_completion=1
