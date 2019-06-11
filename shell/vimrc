@@ -145,3 +145,4 @@ autocmd FileType tex inoremap ,cs \begin{verbatim}<Enter><++><Enter>\end{verbati
 "" Spell Checking
 autocmd BufRead,BufNewFile *.md setlocal spell
 set complete+=kspell
+" Small edit
