@@ -124,17 +124,11 @@ PATH=$PATH"~/.vim/bundle/vim-live-latex-preview/bin"
 
 # Functions and aliases
 
-alias ..="cd .."
-alias clear_tasks="rm $HOME/.todo.sav"
-alias sl="ls"
-alias "source ~/.bashrc"="echo Nope"
-alias conv="convertTextToPDF"
-alias uptime="uptime -p"
-alias upgrade="sudo apt-get update && sudo apt-get upgrade -y"
 #alias x="xdg-open . > /dev/null 2>&1 & disown"
 
 function x() {
 	for item in "$@"; do
+#		[[ ! -d "$item" || -f "$item" ]] && break
 		xdg-open "$item" > /dev/null 2>&1 & disown
 	done
 }
@@ -143,44 +137,12 @@ function x() {
 # defined functions that would not fit in a simple alias command
 prompt_context() {}
 
-function mtpdf() {
-	echo "File: $1"
-	#filename="$1:t:r"
-	#echo "Filename: $filename"
-	# converting
-	#pandoc "$1" --listings -H $HOME/Documents/latex_formatting/coding.tex --variable urlcolor=blue -o "$filename".pdf
-}
-
-
 function respring_iphone() {
 	tcprelay -t 22:2222 &
 	ssh root@localhost 'killall -9 SpringBoard'
 	killall tcprealy
 }
 
-function collate_documents() {
-    [[ -d $(git rev-parse --show-toplevel) ]] || cd "$(git rev-parse --show-toplevel)"
-    [[ -d ./tmp ]] || mkdir ./tmp
-    find . -type f -name '*.md' ! -name 'README.md' | while read file; do
-        cp -ar "$file" tmp/
-        file=$(basename "$file")
-        cd tmp
-	    pmark tmp/"$file"
-        cd ..
-    done
-    cd tmp
-    pdfunite resources/Master\ Document.pdf
-    cd ..
-    rm -rf tmp/
-}
-
-function install() {
-	sudo apt-get install "$@" -y
-}
-function lgit() {
-	# find all the git repos in a given home folder
-	sudo find "$HOME" -type d -name '.git'
-}
 
 function bak_pref() {
 	prev="$PWD"
@@ -211,33 +173,6 @@ function bak_pref() {
 	cd "$prev"
 }
 
-function notes() {
-	# this is a large and on going program I am writing to compile my notes
-	DOC_COUNT=$(find . -type f -iname '*.md' | wc -l)
-	# find all titles
-	grep '^[^\#]*\#[^\#]*$' file.md
-	# this will find the date given the format mm/dd/yyyy
-	grep -Eio '[0-1][0-9]\/[0-3][0-9]\/[0-9]{4}' Westward\ Expansion\ and\ the\ Sectional\ Crisis.md
-	# grep for pdf lisitngs, attempt to split the pdf into images and embed them into the markdown file
-
-}
-#alias cd="cd $@ && ls ."
-
-function catenate_notes {
-	[[ -d "$PWD"/assets ]] || mkdir "$PWD"/assets
-	find . -type f -iname '*.md' | while read line; do 
-		echo "$line" | sed 's/^\.\///g'
-	done | sort | while read file; do
-			 parent=$(dirname -- "./$file")
-			 find "$parent" -type d -iname 'assets' -exec cp {}/* -t "$PWD"/assets \;
-			 cat "$file"
-		       done > Final.txt
-}
-
-# VIM Keybindings in ZSH
-# link -> https://dougblack.io/words/zsh-vi-mode.html
-
-# Vim and TMUX love child -> https://github.com/christoomey/vim-tmux-navigator
 
 export RANGER_LOAD_DEFAULT_RC=false
 VISUAL=editor; export VISUAL EDITOR=vim; export EDITOR
@@ -245,13 +180,17 @@ export SPOTIPY_CLIENT_ID='d2697e8198c449f09abd2e0833f48dff'
 export SPOTIPY_CLIENT_SECRET='862367c3080d49e782de1bd74641b876'
 export SPOTIPY_REDIRECT_URI='http://localhost:8888'
 
+alias gu="cd ~/Projects/university"
+alias ge="cd /media/jared/External"
+alias gp="cd ~/Projects"
 alias gh="cd ~"
 alias sz="source ~/.zshrc"
+alias lg="sudo find "$HOME" -type d -name '.git'"
 alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
-alias gu="cd ~/Projects/university"
 alias vx="vim ~/.Xresources"
-alias gp="cd ~/Projects"
+alias ut="uptime -p"
+alias up="sudo apt-get update && sudo apt-get upgrade -y"
 #alias pdfsize="pdfinfo "$1" | gawk '/File size/ {byte=$3/1024/1024; print byte " GB"}'"
 # new article
 CURRENT=$(date +"%d %B %Y")
@@ -301,4 +240,5 @@ function full_bak() {
 	bak_pref
 }
 set -g xterm-keys on
+
 
