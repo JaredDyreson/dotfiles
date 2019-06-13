@@ -275,6 +275,15 @@ function git_helper() {
 	git push origin master
 }
 function full_bak() {
+	# this script is meant to facilitate backups that can be automated
+	# TODO
+	# Migrate all git repos to ~/Projects [CHECK]
+	# Integrate bak_pref [CHECK]
+	# Write documentation about this process []
+	# Go through External and delete all unecessary files [] (Please try to make the total size no more than 128 GB. This is a goal that should be attained but not mandatory. It is an incentive to delete more unecessary crap)
+
+	# 
+
 	find ~/Projects -name '\.git' | while read repository; do
 		l=$(echo "$repository" | sed 's/\.git//')
 		echo ""$BLUE"Project: $(basename $l)"$NOCOLOR""
