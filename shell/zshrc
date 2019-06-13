@@ -199,9 +199,11 @@ function bak_pref() {
 	cp -ar ~/.config/ranger/rifle.conf ~/Projects/dotfiles/ranger
 
 	cd ~/Projects/dotfiles
+	echo ""$BLUE"Project: dotfiles"$NOCOLOR""
 	git add *
 	git commit -m "Automatic backup performed"
 	git push origin master
+	echo "$BLUE""Project: scripts"$NOCOLOR""
 	cd ~/scripts
 	git add *
 	git commit -m "Automatically backing up scripts"
