@@ -1,3 +1,9 @@
+# COLORS, ALL THE COLORS!
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+BLUE="\033[1;34m"
+NOCOLOR="\033[0m"
+
 # NO HISTORY SHARING, FUCKING ANNOYING
 setopt no_share_history
 # If you come from bash you might have to change your $PATH.
@@ -178,21 +184,21 @@ function lgit() {
 
 function bak_pref() {
 	prev="$PWD"
-	[[ -d ~/Documents/dotfiles ]] || exit
+	[[ -d ~/Projects/dotfiles ]] || exit
 	# shell
-	cp -ar ~/.zshrc ~/Documents/dotfiles/shell/zshrc
-	cp -ar ~/.vimrc ~/Documents/dotfiles/shell/vimrc
+	cp -ar ~/.zshrc ~/Projects/dotfiles/shell/zshrc
+	cp -ar ~/.vimrc ~/Projects/dotfiles/shell/vimrc
 
 	# terminal
 
-	cp -ar ~/.Xresources ~/Documents/dotfiles/terminal/Xresources
+	cp -ar ~/.Xresources ~/Projects/dotfiles/terminal/Xresources
 
 	# terminal applications
 
-	cp -ar ~/.config/ranger/rc.conf ~/Documents/dotfiles/ranger
-	cp -ar ~/.config/ranger/rifle.conf ~/Documents/dotfiles/ranger
+	cp -ar ~/.config/ranger/rc.conf ~/Projects/dotfiles/ranger
+	cp -ar ~/.config/ranger/rifle.conf ~/Projects/dotfiles/ranger
 
-	cd ~/Documents/dotfiles
+	cd ~/Projects/dotfiles
 	git add *
 	git commit -m "Automatic backup performed"
 	git push origin master
@@ -243,6 +249,7 @@ alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
 alias gu="cd ~/Projects/university"
 alias vx="vim ~/.Xresources"
+alias gp="cd ~/Projects"
 #alias pdfsize="pdfinfo "$1" | gawk '/File size/ {byte=$3/1024/1024; print byte " GB"}'"
 # new article
 CURRENT=$(date +"%d %B %Y")
@@ -260,5 +267,27 @@ function napa(){
 	vim "$1".tex
 }
 
+function git_helper() {
+	cd "$1"
+	git config --unset core.bare
+	git add *
+	git commit -m "Automated backup"
+	git push origin master
+}
+function full_bak() {
+	find ~/Projects -name '\.git' | while read repository; do
+		l=$(echo "$repository" | sed 's/\.git//')
+		echo ""$BLUE"Project: $(basename $l)"$NOCOLOR""
+		echo "true" >> /tmp/full_bak_flag
+		find "$l" -type f -not -path '*/\.git/*' | while read file; do
+			size=$(stat --printf="%s" "$file")
+			! [[ "$size" =~ '^[0-9+$]' ]] && break
+			[[ "$size" -ge 100000000 ]] && (sed -i 's/true/false/g' /tmp/full_bak_flag;echo "$file" >> "$repository"/"$(basename "$l").log")
+		done
+		[[ "$(head -n 1 /tmp/full_bak_flag)" == "true" ]] &&  (echo "$GREEN""This repo can be committed and sent to Github""$NOCOLOR";git_helper "$(dirname $repository)") || (echo "$RED""Cannot commit because of files being too large. Please see $repository/$(basename "$l").log""$NOCOLOR")
+		truncate -s 0 /tmp/full_bak_flag
+	done
+	bak_pref
+}
 set -g xterm-keys on
 

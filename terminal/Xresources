@@ -1,3 +1,6 @@
+! Links
+! https://github.com/Thadz/my-urxvt-dotfile/blob/master/.Xresources
+! https://github.com/lgaggini/dotfiles/blob/master/.Xresources
 URxvt*altSendsEscape: true
 
 URxvt.keysym.Shift-Up: command:\033]720;1\007

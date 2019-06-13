@@ -1,3 +1,4 @@
+" Luke Smith vimrc -> https://github.com/LukeSmithxyz/voidrice/blob/archi3/.config/nvim/init.vim
 set nocompatible
 filetype off
 set background=dark
@@ -14,6 +15,7 @@ Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ying17zi/vim-live-latex-preview'
+Plugin 'scrooloose/nerdcommenter'
 
 call vundle#end()
 
@@ -55,23 +57,25 @@ nnoremap <S-Up> :m-2<CR>
 nnoremap <S-Down> :m+<CR>
 inoremap <S-Up> <Esc>:m-2<CR>
 inoremap <S-Down> <Esc>:m+<CR>
+" Text Processing
+
+" Wrapping text around a word or phrase --> https://superuser.com/questions/875095/adding-parenthesis-around-highlighted-text-in-vim
 
 " PROGRAMMING
 
 " CPP
 " These were inspired by Luke Smith's LaTeX scripts found below
 
-" Automatically create main body (might be overkill but hey, I like it)
-autocmd FileType cpp inoremap ,m #include<iostream><Enter><Enter>int main(int argc, char *argv[]){<Enter><++><Enter><C-d>return 0;<Enter>}<ESC>i
-autocmd FileType cpp inoremap ,sc std::cout << <++> << std::endl;
 " External header
 autocmd FileType cpp inoremap ,eh #include <<++>><ESC>i
 " Local header
 autocmd FileType cpp inoremap ,lh #include "<++>"<ESC>i
+
 " Make run from Vim (gcc, clang, jcomp, pdflatex)
 
 set autowrite
 autocmd FileType cpp nnoremap <buffer> <C-c> :!clear && clang++-6.0 -std=c++17 % -g -o %:r.out && ./%:r.out <Enter>
+autocmd FileType cpp vnoremap <buffer> // :'<,'>/^/\/\// <Enter> 
 autocmd FileType tex nnoremap <buffer> <C-c> :!make_run_latex "%" <Enter>
 "pdflatex "%" -o "%:r".pdf && xreader "%:r".pdf <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
