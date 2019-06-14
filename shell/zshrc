@@ -241,4 +241,28 @@ function full_bak() {
 }
 set -g xterm-keys on
 
+function rd() {	[[ -f "$1" ]] && (cat "$1" | awk '!seen[$0]++') || (echo "$1" | awk '!seen[$0]++') }
+function chd() {
+	[[ "$(whoami)" != "root" ]] && (echo "[-] Run as root";exit)
+	# $1 -> current size (automate via path given)
+	# $2 -> path to drive (see what I mean ^)
+	dd if=/dev/random bs=1M count count="$1" of=randomfile
+	dd if=randomfile of="$2"
+	first="$(dd if=randomfile | sha256)"
+	second="$(dd if="$2" | sha256)"
+	[[ "$first" == "$second" ]] && (echo "[+] Drive is the size it claims to be") || (echo "[-] Drive is not the size it claims to be")
+}
+function mount_vmware() {
+	# found going through old photos of tweets
+	[[ ! -d "/tmp/vmware_mount" ]] && sudo mkdir -p /tmp/vmware_mount
+	[[ ! -f "$1" || -z "$@" ]] && exit
+	sudo mount "$1" /tmp/vmware_mount -o ro,loop=/dev/loop1,offset=32768 -t ntfs
+}
+# Chaining multiple "grep commands" using one line in AWK
+# awk '/a/ && /b/ && ! /c/ && /d/' --> grep 'a' | grep 'b' | grep -v 'c' | grep 'd'
 
+
+# Possible jobs I am intersted in being
+# Firmware Engineer (Intern at Intel)
+
+# sudo apt-get install intel-microcode microcode.ctl -y
