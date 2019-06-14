@@ -258,6 +258,20 @@ function mount_vmware() {
 	[[ ! -f "$1" || -z "$@" ]] && exit
 	sudo mount "$1" /tmp/vmware_mount -o ro,loop=/dev/loop1,offset=32768 -t ntfs
 }
+function meme_template() {
+	# adapted from a climagic tweet <3
+	TOP="$2"
+	BOTTOM="$3"
+	[[ ! -f "$1" || -z "$@" ]] && exit
+	convert "$1" -font Ubuntu -fill white -pointsize 48 -stroke black -strokewidth 2 -gravity north -annotate 0 "$TOP" -gravity south -annotate 0 "$BOTTOM" outputmeme
+}
+
+function batt_drain() {
+	[[ "$(whoami)" != "root" ]] && (echo "[-] Run as root";exit)
+	stress --cpu 4 --io 2 -vm2 --vm-bytes 128M
+}
+
+function slide_show(){ feh -F -D90 --recursive --randomize --auto-zoom ~/Pictures }
 # Chaining multiple "grep commands" using one line in AWK
 # awk '/a/ && /b/ && ! /c/ && /d/' --> grep 'a' | grep 'b' | grep -v 'c' | grep 'd'
 
