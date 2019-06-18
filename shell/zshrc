@@ -127,8 +127,8 @@ PATH=$PATH"~/.vim/bundle/vim-live-latex-preview/bin"
 #alias x="xdg-open . > /dev/null 2>&1 & disown"
 
 function x() {
+	[[ -z "$@" ]] && (xdg-open "$PWD" > /dev/null 2>&1)
 	for item in "$@"; do
-#		[[ ! -d "$item" || -f "$item" ]] && break
 		xdg-open "$item" > /dev/null 2>&1 & disown
 	done
 }
@@ -181,7 +181,9 @@ export SPOTIPY_CLIENT_SECRET='862367c3080d49e782de1bd74641b876'
 export SPOTIPY_REDIRECT_URI='http://localhost:8888'
 
 alias gu="cd ~/Projects/university"
-alias ge="cd /media/jared/External"
+alias ge="cd /media/"$USER"/External\ New"
+alias ue="umount /media/"$USER"/External\ New && sleep 3 && notify-send 'You can now unplug External New'"
+alias ua="umount /media/"$USER"/*"
 alias gp="cd ~/Projects"
 alias gh="cd ~"
 alias sz="source ~/.zshrc"
@@ -191,6 +193,7 @@ alias vrc="vim ~/.vimrc"
 alias vx="vim ~/.Xresources"
 alias ut="uptime -p"
 alias up="sudo apt-get update && sudo apt-get upgrade -y"
+alias bu="rsync -av --delete /media/jared/External\ New/* /media/jared/External"
 #alias pdfsize="pdfinfo "$1" | gawk '/File size/ {byte=$3/1024/1024; print byte " GB"}'"
 # new article
 CURRENT=$(date +"%d %B %Y")
@@ -241,7 +244,10 @@ function full_bak() {
 }
 set -g xterm-keys on
 
+# remove duplicates
 function rd() {	[[ -f "$1" ]] && (cat "$1" | awk '!seen[$0]++') || (echo "$1" | awk '!seen[$0]++') }
+
+# check drive size
 function chd() {
 	[[ "$(whoami)" != "root" ]] && (echo "[-] Run as root";exit)
 	# $1 -> current size (automate via path given)
@@ -272,6 +278,9 @@ function batt_drain() {
 }
 
 function slide_show(){ feh -F -D90 --recursive --randomize --auto-zoom ~/Pictures }
+function clone_drive { rsync -av --delete /media/jared/New\ External/* /media/jared/Long\ Term/ }
+# find directories that contain certain types of files
+#function find_type_dir{ find . -name ".*$1" | sed 's/\/[^\/]*$//' | sort | uniq }
 # Chaining multiple "grep commands" using one line in AWK
 # awk '/a/ && /b/ && ! /c/ && /d/' --> grep 'a' | grep 'b' | grep -v 'c' | grep 'd'
 
