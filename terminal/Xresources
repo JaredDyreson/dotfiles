@@ -9,7 +9,7 @@ URxvt.scrollBar: false
 
 !! Acai Theme
 
-URxvt.font: xft:bitstream vera sans mono:size=12
+!URxvt.font: xft:bitstream vera sans mono:size=12
 
 URxvt*color0:	#363636
 URxvt*color1:	#ff0883
@@ -41,3 +41,7 @@ URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 URxvt.iso14755: false
 URxvt*geometry: 114x32+360+250 
 !URxvt*iconFile: /home/jared/Pictures/Application\ Icons/notes_app_icon.jpg
+URxvt.font:                     xft:DejaVu Sans Mono:autohint=true:size=12
+URxvt.boldFont:                 xft:DejaVu Sans Mono:autohint=true:bold:size=12
+URxvt.italicFont:               xft:DejaVu Sans Mono:autohint=true:italic:size=12
+URxvt.boldItalicFont:           xft:DejaVu Sans Mono:autohint=true:bold:italic:size=12
