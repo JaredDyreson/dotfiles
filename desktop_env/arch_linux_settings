@@ -10,7 +10,8 @@ picture-uri='file:///home/jared/Pictures/Wallpapers/venom_wallpaper.jpg'
 
 [org/cinnamon/desktop/interface]
 cursor-blink-time=1200
-gtk-theme='Flat-Remix-GTK-Blue-Dark'
+cursor-theme='Adwaita'
+gtk-theme='Mint-Y-Dark'
 icon-theme='Flat-Remix-Blue'
 text-scaling-factor=1.0
 
@@ -45,11 +46,16 @@ name='Open Discord'
 [org/cinnamon/desktop/keybindings/media-keys]
 terminal=@as []
 
+[org/cinnamon/desktop/media-handling]
+autorun-x-content-ignore=['x-content/bootable-media']
+autorun-x-content-open-folder=@as []
+autorun-x-content-start-app=['x-content/unix-software', 'x-content/bootable-media']
+
 [org/cinnamon/desktop/sound]
 event-sounds=false
 
 [org/cinnamon/desktop/wm/preferences]
-theme='Flat-Remix-GTK-Blue-Dark'
+theme='Mint-Y-Dark'
 titlebar-font='Noto Sans 10'
 
 [org/cinnamon/settings-daemon/peripherals/keyboard]
@@ -58,7 +64,8 @@ numlock-state='on'
 repeat-interval=uint32 30
 
 [org/cinnamon/settings-daemon/plugins/xsettings]
-menus-have-icons=false
+buttons-have-icons=true
+menus-have-icons=true
 
 [org/cinnamon/theme]
 name='Linux Mint'
@@ -85,7 +92,9 @@ toolkit-accessibility=false
 options=['caps\tcaps:escape']
 
 [org/nemo/window-state]
-geometry='800x550+550+302'
+geometry='799x547+483+145'
 maximized=false
+my-computer-expanded=true
+side-pane-view='places'
 sidebar-bookmark-breakpoint=0
 start-with-sidebar=true
