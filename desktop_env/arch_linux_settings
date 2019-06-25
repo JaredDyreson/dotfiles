@@ -1,74 +1,4 @@
 [org/cinnamon]
-enabled-applets=['panel1:right:0:systray@cinnamon.org:0', 'panel1:left:0:menu@cinnamon.org:1', 'panel1:left:1:show-desktop@cinnamon.org:2', 'panel1:left:2:grouped-window-list@cinnamon.org:3', 'panel1:right:1:keyboard@cinnamon.org:4', 'panel1:right:2:notifications@cinnamon.org:5', 'panel1:right:3:removable-drives@cinnamon.org:6', 'panel1:right:5:bluetooth@cinnamon.org:7', 'panel1:right:6:network@cinnamon.org:8', 'panel1:right:7:sound@cinnamon.org:9', 'panel1:right:8:power@cinnamon.org:10', 'panel1:right:9:calendar@cinnamon.org:11']
-next-applet-id=12
-panel-zone-icon-sizes='[{"panelId": 1, "left": 22, "center": 22, "right": 22}]'
-panels-height=['1:33']
-
-[org/cinnamon/desktop/background]
-picture-uri='file:///home/jared/Pictures/Wallpapers/venom_wallpaper.jpg'
-
-[org/cinnamon/desktop/interface]
-cursor-blink-time=1200
-gtk-theme='Flat-Remix-GTK-Blue-Dark'
-icon-theme='Flat-Remix-Blue'
-text-scaling-factor=1.0
-
-[org/cinnamon/desktop/keybindings]
-custom-list=['custom0']
-
-[org/cinnamon/desktop/keybindings/custom-keybindings/custom0]
-binding=['<Primary><Alt>t']
-command='urxvt -geometry 114x32+360+250 -e zsh'
-name='Open Terminal'
-
-[org/cinnamon/desktop/keybindings/media-keys]
-terminal=@as []
-
-[org/cinnamon/desktop/sound]
-event-sounds=false
-
-[org/cinnamon/desktop/wm/preferences]
-theme='Flat-Remix-GTK-Blue-Dark'
-titlebar-font='Noto Sans 10'
-
-[org/cinnamon/settings-daemon/peripherals/keyboard]
-delay=uint32 500
-numlock-state='off'
-repeat-interval=uint32 30
-
-[org/cinnamon/settings-daemon/plugins/xsettings]
-menus-have-icons=false
-
-[org/cinnamon/theme]
-name='Linux Mint'
-symbolic-relative-size=0.67000000000000004
-theme-cache-updated=1561224929
-
-[org/gnome/desktop/a11y/applications]
-screen-keyboard-enabled=false
-screen-reader-enabled=false
-
-[org/gnome/desktop/a11y/mouse]
-dwell-click-enabled=false
-dwell-threshold=10
-dwell-time=1.2
-secondary-click-enabled=false
-secondary-click-time=1.2
-
-[org/gnome/desktop/interface]
-document-font-name='Noto Sans 10'
-monospace-font-name='Noto Sans 10'
-toolkit-accessibility=false
-
-[org/gnome/libgnomekbd/keyboard]
-options=['caps\tcaps:escape']
-
-[org/nemo/window-state]
-geometry='800x550+550+302'
-maximized=false
-sidebar-bookmark-breakpoint=0
-start-with-sidebar=true
-[org/cinnamon]
 applet-cache-updated=1561237345
 enabled-applets=['panel1:right:0:systray@cinnamon.org:0', 'panel1:left:0:menu@cinnamon.org:1', 'panel1:left:1:show-desktop@cinnamon.org:2', 'panel1:left:2:grouped-window-list@cinnamon.org:3', 'panel1:right:1:keyboard@cinnamon.org:4', 'panel1:right:2:notifications@cinnamon.org:5', 'panel1:right:3:removable-drives@cinnamon.org:6', 'panel1:right:5:bluetooth@cinnamon.org:7', 'panel1:right:6:network@cinnamon.org:8', 'panel1:right:7:sound@cinnamon.org:9', 'panel1:right:8:power@cinnamon.org:10', 'panel1:right:9:calendar@cinnamon.org:11']
 next-applet-id=12
@@ -124,7 +54,7 @@ titlebar-font='Noto Sans 10'
 
 [org/cinnamon/settings-daemon/peripherals/keyboard]
 delay=uint32 500
-numlock-state='off'
+numlock-state='on'
 repeat-interval=uint32 30
 
 [org/cinnamon/settings-daemon/plugins/xsettings]
