@@ -194,6 +194,8 @@ alias vx="vim ~/.Xresources"
 alias ut="uptime -p"
 alias up="sudo apt-get update && sudo apt-get upgrade -y"
 alias bu="rsync -av --delete /media/jared/External\ New/* /media/jared/External"
+# restart cinnamon if it is acting up
+alias rc="sudo systemctl restart lightdm.service"
 #alias pdfsize="pdfinfo "$1" | gawk '/File size/ {byte=$3/1024/1024; print byte " GB"}'"
 # new article
 CURRENT=$(date +"%d %B %Y")
@@ -279,6 +281,7 @@ function batt_drain() {
 
 function slide_show(){ feh -F -D90 --recursive --randomize --auto-zoom ~/Pictures }
 function clone_drive { rsync -av --delete /media/jared/New\ External/* /media/jared/Long\ Term/ }
+
 # find directories that contain certain types of files
 #function find_type_dir{ find . -name ".*$1" | sed 's/\/[^\/]*$//' | sort | uniq }
 # Chaining multiple "grep commands" using one line in AWK
