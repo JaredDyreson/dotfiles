@@ -16,6 +16,9 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ying17zi/vim-live-latex-preview'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'PratikBhusal/vim-grip'
+Plugin 'junegunn/goyo.vim'
+Plugin 'mattn/emmet-vim'
 
 call vundle#end()
 
@@ -51,6 +54,18 @@ function! XTermPasteBegin()
   return ""
 endfunction
 
+function! OpenMarkdownPreview() abort
+  if exists('s:markdown_job_id') && s:markdown_job_id > 0
+    call jobstop(s:markdown_job_id)
+    unlet s:markdown_job_id
+  endif
+  let s:markdown_job_id = job_start(
+    \ 'grip ' . shellescape(expand('%:p')) . " 0 2>&1 | awk '/Running/ { printf $4 }'",
+    \ { 'on_stdout': 'OnGripStart', 'pty': 1 })
+  function! OnGripStart(_, output, __)
+    call system('open ' . a:output[0])
+  endfunction
+endfunction
 
 " Moving text up and down while holding shift
 nnoremap <S-Up> :m-2<CR>
@@ -74,12 +89,16 @@ autocmd FileType cpp inoremap ,lh #include "<++>"<ESC>i
 " Make run from Vim (gcc, clang, jcomp, pdflatex)
 
 set autowrite
+let g:grip_on=1
+let g:grip_default_map=0
 autocmd FileType cpp nnoremap <buffer> <C-c> :!clear && clang++-6.0 -std=c++17 % -g -o %:r.out && ./%:r.out <Enter>
-autocmd FileType cpp vnoremap <buffer> // :'<,'>/^/\/\// <Enter> 
 autocmd FileType tex nnoremap <buffer> <C-c> :!make_run_latex "%" <Enter>
-"pdflatex "%" -o "%:r".pdf && xreader "%:r".pdf <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
 autocmd FileType c nnoremap <buffer> <C-c> :!clear && gcc % -o %:r && ./%:r <Enter>
+autocmd FileType markdown nnoremap <buffer> <C-c> :OpenMarkdownPreview
+autocmd FileType python nnoremap <buffer> <C-c> :!chmod +x "%" && python3.5 % <Enter>
+autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>
+autocmd FileType php nnoremap <buffer> <C-c> :!clear && php % <Enter>
 "nnoremap <C-m> :!clear && make all <Enter>
 " Push to Github directly from a vim buffer
 nnoremap <C-g> :!commit "$(pwd)" <Enter>
@@ -87,7 +106,6 @@ nnoremap <C-g> :!commit "$(pwd)" <Enter>
 " Run commands for certain files when saved
 autocmd BufWritePost ~/.Xresources !xrdb ~/.Xresources
 autocmd BufWritePost ~/.zshrc !source ~/.zshrc
-autocmd BufWritePost *.tex !make_run_latex "%"
 
 "Autocomplete for programming languages
 Bundle 'Valloric/YouCompleteMe'

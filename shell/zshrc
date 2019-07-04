@@ -194,11 +194,27 @@ alias vx="vim ~/.Xresources"
 alias ut="uptime -p"
 alias up="sudo apt-get update && sudo apt-get upgrade -y"
 alias bu="rsync -av --delete /media/jared/External\ New/* /media/jared/External"
+
 # restart cinnamon if it is acting up
 alias rc="sudo systemctl restart lightdm.service"
-#alias pdfsize="pdfinfo "$1" | gawk '/File size/ {byte=$3/1024/1024; print byte " GB"}'"
-# new article
+
 CURRENT=$(date +"%d %B %Y")
+
+
+# all things related to writing documents
+
+function nblog(){
+	current_for_jekyll="$(date +%Y-%m-%d-)"
+	[[ -z "$1" ]] && (echo "[-] Provide name for blog";exit)
+	name=$(printf "$current_for_jekyll" && sed -e 's/\(.*\)/\L\1/;s/\ /-/g' <<< "$1")
+	real="$(realpath ~/Projects/website/_posts/"$name".md)"
+	cp -ar ~/Projects/university/LaTeX\ Templates/blog_template.md "$real"
+	sed -i 's/title.*/title\:\t'$1'/g' "$real" 
+	vim ~/Projects/website/_posts/"$name".md
+
+}
+
+# new article
 function nmla() {
 	[[ -z "$1" ]] && (echo "[-] Provide name for article";exit)
 	cp -ar ~/Projects/university/LaTeX\ Templates/MLA_Template.tex ./"$1".tex
@@ -287,8 +303,5 @@ function clone_drive { rsync -av --delete /media/jared/New\ External/* /media/ja
 # Chaining multiple "grep commands" using one line in AWK
 # awk '/a/ && /b/ && ! /c/ && /d/' --> grep 'a' | grep 'b' | grep -v 'c' | grep 'd'
 
-
-# Possible jobs I am intersted in being
-# Firmware Engineer (Intern at Intel)
-
 # sudo apt-get install intel-microcode microcode.ctl -y
+source /home/jared/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
