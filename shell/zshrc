@@ -211,7 +211,8 @@ function nblog(){
 	cp -ar ~/Projects/university/LaTeX\ Templates/blog_template.md "$real"
 	sed -i 's/title.*/title\:\t'$1'/g' "$real" 
 	vim ~/Projects/website/_posts/"$name".md
-
+	# https://github.com/monostream/tifig/releases
+	# https://gist.github.com/bittercoder/f6601784ebe4f63e9b9e037e3344b960
 }
 
 # new article
