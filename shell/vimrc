@@ -1,7 +1,13 @@
 " Luke Smith vimrc -> https://github.com/LukeSmithxyz/voidrice/blob/archi3/.config/nvim/init.vim
+
 set nocompatible
 filetype off
 set background=dark
+
+"" Spell Checking
+autocmd BufRead,BufNewFile *.md setlocal spell
+set complete+=kspell
+
 " Making sure the vundle settings are working accordingly
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -22,24 +28,30 @@ Plugin 'mattn/emmet-vim'
 
 call vundle#end()
 
-filetype indent on
+"filetype indent on
 syntax on
-set autoindent
 syntax enable
-set number " Allow for line numbering
-set encoding=utf-8 "Allow for UTF-8 Support 
+set t_Co=256
+set autoindent
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set number 
+set encoding=utf-8 
+set termencoding=utf-8
+set textwidth=120
+
+set showmatch
+set incsearch
+
+"set comments=sl:/*,mb:\ *,elx:\ */
 
 " Moving through the files
 inoremap <S-Tab> <C-d>
 nnoremap <S-Tab> <<
 inoremap <Tab> <C-t>
 nnoremap <Tab> >>
-
-" Undo and Redo Support
-nnoremap <C-Z> u
-nnoremap <C-Y> <C-R>
-inoremap <C-Z> <C-O>u
-inoremap <C-Y> <C-O><C-R>
 
 "This is so I can have proper copy pasting format
 
@@ -54,24 +66,6 @@ function! XTermPasteBegin()
   return ""
 endfunction
 
-function! OpenMarkdownPreview() abort
-  if exists('s:markdown_job_id') && s:markdown_job_id > 0
-    call jobstop(s:markdown_job_id)
-    unlet s:markdown_job_id
-  endif
-  let s:markdown_job_id = job_start(
-    \ 'grip ' . shellescape(expand('%:p')) . " 0 2>&1 | awk '/Running/ { printf $4 }'",
-    \ { 'on_stdout': 'OnGripStart', 'pty': 1 })
-  function! OnGripStart(_, output, __)
-    call system('open ' . a:output[0])
-  endfunction
-endfunction
-
-" Moving text up and down while holding shift
-nnoremap <S-Up> :m-2<CR>
-nnoremap <S-Down> :m+<CR>
-inoremap <S-Up> <Esc>:m-2<CR>
-inoremap <S-Down> <Esc>:m+<CR>
 " Text Processing
 
 " Wrapping text around a word or phrase --> https://superuser.com/questions/875095/adding-parenthesis-around-highlighted-text-in-vim
@@ -82,23 +76,24 @@ inoremap <S-Down> <Esc>:m+<CR>
 " These were inspired by Luke Smith's LaTeX scripts found below
 
 " External header
-autocmd FileType cpp inoremap ,eh #include <<++>><ESC>i
+autocmd FileType cpp,hpp inoremap ,eh #include <<++>><ESC>i
 " Local header
-autocmd FileType cpp inoremap ,lh #include "<++>"<ESC>i
+autocmd FileType cpp,hpp inoremap ,lh #include "<++>"<ESC>i
+autocmd FileType cpp,hpp inoremap ,t template <typename T><Enter><ESC>i
+autocmd FileType markdown inoremap ,s ```<++><Enter>```<Enter><ESC>i
 
 " Make run from Vim (gcc, clang, jcomp, pdflatex)
 
 set autowrite
-let g:grip_on=1
-let g:grip_default_map=0
 autocmd FileType cpp nnoremap <buffer> <C-c> :!clear && clang++-6.0 -std=c++17 % -g -o %:r.out && ./%:r.out <Enter>
 autocmd FileType tex nnoremap <buffer> <C-c> :!make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
 autocmd FileType c nnoremap <buffer> <C-c> :!clear && gcc % -o %:r && ./%:r <Enter>
 autocmd FileType markdown nnoremap <buffer> <C-c> :OpenMarkdownPreview
-autocmd FileType python nnoremap <buffer> <C-c> :!chmod +x "%" && python3.5 % <Enter>
+autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python3.5 % <Enter>
 autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>
 autocmd FileType php nnoremap <buffer> <C-c> :!clear && php % <Enter>
+
 "nnoremap <C-m> :!clear && make all <Enter>
 " Push to Github directly from a vim buffer
 nnoremap <C-g> :!commit "$(pwd)" <Enter>
@@ -123,48 +118,3 @@ inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 map <leader><leader> <Esc>/<++><Enter>"_c4l
 
-" Word Count
-autocmd FileType tex map <leader>w :w !detex \| wc -w<CR>
-
-autocmd FileType tex inoremap ,fr \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter><Enter>\end{frame}<Enter><Enter><++><Esc>6kf}i
-autocmd FileType tex inoremap ,fi \begin{fitch}<Enter><Enter>\end{fitch}<Enter><Enter><++><Esc>3kA
-autocmd FileType tex inoremap ,exe \begin{exe}<Enter>\ex<Space><Enter>\end{exe}<Enter><Enter><++><Esc>3kA
-autocmd FileType tex inoremap ,em \emph{}<++><Esc>T{i
-autocmd FileType tex inoremap ,bf \textbf{}<++><Esc>T{i
-autocmd FileType tex vnoremap , <ESC>`<i\{<ESC>`>2la}<ESC>?\\{<Enter>a
-autocmd FileType tex inoremap ,it \textit{}<++><Esc>T{i
-autocmd FileType tex inoremap ,ct \textcite{}<++><Esc>T{i
-autocmd FileType tex inoremap ,cp \parencite{}<++><Esc>T{i
-autocmd FileType tex inoremap ,glos {\gll<Space><++><Space>\\<Enter><++><Space>\\<Enter>\trans{``<++>''}}<Esc>2k2bcw
-autocmd FileType tex inoremap ,x \begin{xlist}<Enter>\ex<Space><Enter>\end{xlist}<Esc>kA<Space>
-autocmd FileType tex inoremap ,ol \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><Enter><++><Esc>3kA\item<Space>
-autocmd FileType tex inoremap ,ul \begin{itemize}<Enter><Enter>\end{itemize}<Enter><Enter><++><Esc>3kA\item<Space>
-autocmd FileType tex inoremap ,li <Enter>\item<Space>
-autocmd FileType tex inoremap ,ref \ref{}<Space><++><Esc>T{i
-autocmd FileType tex inoremap ,tab \begin{tabular}<Enter><++><Enter>\end{tabular}<Enter><Enter><++><Esc>4kA{}<Esc>i
-autocmd FileType tex inoremap ,ot \begin{tableau}<Enter>\inp{<++>}<Tab>\const{<++>}<Tab><++><Enter><++><Enter>\end{tableau}<Enter><Enter><++><Esc>5kA{}<Esc>i
-autocmd FileType tex inoremap ,can \cand{}<Tab><++><Esc>T{i
-autocmd FileType tex inoremap ,con \const{}<Tab><++><Esc>T{i
-autocmd FileType tex inoremap ,v \vio{}<Tab><++><Esc>T{i
-autocmd FileType tex inoremap ,a \href{}{<++>}<Space><++><Esc>2T{i
-autocmd FileType tex inoremap ,sc \textsc{}<Space><++><Esc>T{i
-autocmd FileType tex inoremap ,chap \chapter{}<Enter><Enter><++><Esc>2kf}i
-autocmd FileType tex inoremap ,sec \section{}<Enter><Enter><++><Esc>2kf}i
-autocmd FileType tex inoremap ,ssec \subsection{}<Enter><Enter><++><Esc>2kf}i
-autocmd FileType tex inoremap ,sssec \subsubsection{}<Enter><Enter><++><Esc>2kf}i
-autocmd FileType tex inoremap ,st <Esc>F{i*<Esc>f}i
-autocmd FileType tex inoremap ,beg \begin{DELRN}<Enter><++><Enter>\end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>DELRN<Enter>c
-autocmd FileType tex inoremap ,up <Esc>/usepackage<Enter>o\usepackage{}<Esc>i
-autocmd FileType tex nnoremap ,up /usepackage<Enter>o\usepackage{}<Esc>i
-autocmd FileType tex inoremap ,tt \texttt{}<Space><++><Esc>T{i
-autocmd FileType tex inoremap ,bt {\blindtext}
-autocmd FileType tex inoremap ,nu $\varnothing$
-autocmd FileType tex inoremap ,col \begin{columns}[T]<Enter>\begin{column}{.5\textwidth}<Enter><Enter>\end{column}<Enter>\begin{column}{.5\textwidth}<Enter><++><Enter>\end{column}<Enter>\end{columns}<Esc>5kA
-autocmd FileType tex inoremap ,rn (\ref{})<++><Esc>F}i
-autocmd FileType tex inoremap ,cs \begin{verbatim}<Enter><++><Enter>\end{verbatim}<Enter>
-" Markdown
-
-"" Spell Checking
-autocmd BufRead,BufNewFile *.md setlocal spell
-set complete+=kspell
-" Small edit

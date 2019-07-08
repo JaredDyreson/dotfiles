@@ -40,4 +40,4 @@ URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 URxvt.iso14755: false
 URxvt*geometry: 114x32+360+250 
-!URxvt*iconFile: /home/jared/Pictures/Application\ Icons/notes_app_icon.jpg
+!URxvt.perl-ext-common: ...,tabbed,...
