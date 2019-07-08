@@ -40,7 +40,6 @@ set expandtab
 set number 
 set encoding=utf-8 
 set termencoding=utf-8
-set textwidth=120
 
 set showmatch
 set incsearch
@@ -85,18 +84,17 @@ autocmd FileType markdown inoremap ,s ```<++><Enter>```<Enter><ESC>i
 " Make run from Vim (gcc, clang, jcomp, pdflatex)
 
 set autowrite
-autocmd FileType cpp nnoremap <buffer> <C-c> :!clear && clang++-6.0 -std=c++17 % -g -o %:r.out && ./%:r.out <Enter>
+autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
 autocmd FileType tex nnoremap <buffer> <C-c> :!make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
-autocmd FileType c nnoremap <buffer> <C-c> :!clear && gcc % -o %:r && ./%:r <Enter>
-autocmd FileType markdown nnoremap <buffer> <C-c> :OpenMarkdownPreview
+"autocmd FileType c nnoremap <buffer> <C-c> :!clear && gcc % -o %:r && ./%:r <Enter>
 autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python3.5 % <Enter>
 autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>
 autocmd FileType php nnoremap <buffer> <C-c> :!clear && php % <Enter>
 
 "nnoremap <C-m> :!clear && make all <Enter>
 " Push to Github directly from a vim buffer
-nnoremap <C-g> :!commit "$(pwd)" <Enter>
+nnoremap <C-g> :!github_push % <Enter>
 
 " Run commands for certain files when saved
 autocmd BufWritePost ~/.Xresources !xrdb ~/.Xresources
