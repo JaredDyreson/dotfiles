@@ -186,6 +186,7 @@ alias ue="umount /media/"$USER"/External\ New && sleep 3 && notify-send 'You can
 alias ua="umount /media/"$USER"/*"
 alias gp="cd ~/Projects"
 alias gpb="cd ~/Projects/Backed-Development"
+alias gpw="cd ~/Projects/website"
 alias gh="cd ~"
 alias sz="source ~/.zshrc"
 alias lg="sudo find "$HOME" -type d -name '.git'"

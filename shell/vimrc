@@ -1,4 +1,5 @@
 " Luke Smith vimrc -> https://github.com/LukeSmithxyz/voidrice/blob/archi3/.config/nvim/init.vim
+" Minimal .vimrc for C/C++ Developers -> https://gist.github.com/rocarvaj/2513367
 
 set nocompatible
 filetype off
@@ -34,9 +35,9 @@ syntax enable
 set t_Co=256
 set autoindent
 set smartindent
-set tabstop=4
-set shiftwidth=4
-set expandtab
+"set tabstop=4
+" set shiftwidth=4
+" set expandtab
 set number 
 set encoding=utf-8 
 set termencoding=utf-8
