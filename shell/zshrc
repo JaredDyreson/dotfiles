@@ -1,16 +1,17 @@
-# COLORS, ALL THE COLORS!
-RED="\033[1;31m"
+# colors, all the colors!
+red="\033[1;31m"
 GREEN="\033[1;32m"
 BLUE="\033[1;34m"
 NOCOLOR="\033[0m"
 
 # NO HISTORY SHARING, FUCKING ANNOYING
 setopt no_share_history
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/jared/.oh-my-zsh"
+export ZSH="/home/jared/.oh-my-zsh"
 alias ls='ls --color=auto'
 
 # Set name of the theme to load --- if set to "random", it will
@@ -117,8 +118,7 @@ git config --global credential.helper 'cache --timeout=3600'
 export PAGER="most"
 export ZSH_THEME="common"
 PATH=$PATH$(find "$HOME/scripts" -type d -not -path '*/\.*' -printf ":%p")
-PATH=$PATH"~/.vim/bundle/vim-live-latex-preview/bin"
-
+export PATH="/home/jared/.ebcli-virtual-env/executables:$PATH"
 # BEGIN PERSONAL EDITS #
 
 
@@ -126,12 +126,6 @@ PATH=$PATH"~/.vim/bundle/vim-live-latex-preview/bin"
 
 #alias x="xdg-open . > /dev/null 2>&1 & disown"
 
-function x() {
-	[[ -z "$@" ]] && (xdg-open "$PWD" > /dev/null 2>&1)
-	for item in "$@"; do
-		xdg-open "$item" > /dev/null 2>&1 & disown
-	done
-}
 
 
 # defined functions that would not fit in a simple alias command
@@ -180,22 +174,6 @@ export SPOTIPY_CLIENT_ID='d2697e8198c449f09abd2e0833f48dff'
 export SPOTIPY_CLIENT_SECRET='862367c3080d49e782de1bd74641b876'
 export SPOTIPY_REDIRECT_URI='http://localhost:8888'
 
-alias gu="cd ~/Projects/university"
-alias ge="cd /media/"$USER"/External\ New"
-alias ue="umount /media/"$USER"/External\ New && sleep 3 && notify-send 'You can now unplug External New'"
-alias ua="umount /media/"$USER"/*"
-alias gp="cd ~/Projects"
-alias gpb="cd ~/Projects/Backed-Development"
-alias gpw="cd ~/Projects/website"
-alias gh="cd ~"
-alias sz="source ~/.zshrc"
-alias lg="sudo find "$HOME" -type d -name '.git'"
-alias zrc="vim ~/.zshrc"
-alias vrc="vim ~/.vimrc"
-alias vx="vim ~/.Xresources"
-alias ut="uptime -p"
-alias up="sudo apt-get update && sudo apt-get upgrade -y"
-alias bu="rsync -av --delete /media/jared/External\ New/* /media/jared/External"
 
 # restart cinnamon if it is acting up
 alias rc="sudo systemctl restart lightdm.service"
@@ -220,9 +198,12 @@ function nblog(){
 # new article
 function nmla() {
 	[[ -z "$1" ]] && (echo "[-] Provide name for article";exit)
-	cp -ar ~/Projects/university/LaTeX\ Templates/MLA_Template.tex ./"$1".tex
-	perl -i -pe "s/.*/$1/ if $.==62;s/CURRENT\ DATE/$CURRENT/" "$1".tex
-	vim "$1".tex
+	if [[ ! -f "$1" ]]; then
+		cp -ar ~/Projects/university/LaTeX\ Templates/MLA_Template.tex ./"$1".tex
+		perl -i -pe "s/.*/$1/ if $.==62;s/CURRENT\ DATE/$CURRENT/" "$1".tex
+	else
+		vim "$1".tex
+	fi
 }
 
 function napa(){
@@ -232,6 +213,13 @@ function napa(){
 	vim "$1".tex
 }
 
+
+function nmemo(){
+	[[ -z "$1" ]] && exit
+	cp -ar ~/Projects/university/LaTeX\ Templates/{memo.tex,texMemo.cls} .
+	mv memo.tex "$1".tex
+	vim "$1".tex
+}
 function git_helper() {
 	cd "$1"
 	git config --unset core.bare
@@ -308,3 +296,56 @@ function clone_drive { rsync -av --delete /media/jared/New\ External/* /media/ja
 
 # sudo apt-get install intel-microcode microcode.ctl -y
 source /home/jared/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# ALIASES #
+
+## NAVIGATION ##
+
+alias gh="cd ~"
+alias ga="cd ~/Applications"
+alias gai="cd ~/Applications/Cydia\ Impactor"
+alias cdd="cd ~/Desktop"
+
+function cdds(){
+	goto="$HOME/Desktop"
+	#cd "$HOME"/Desktop
+	#find -L . -maxdepth 1 -type d | while read line; do 
+		#[[ "$(echo "$line" | egrep '[Fall|Spring] [0-9]{4}')" ]] && goto="$line"
+	#	echo "$line"
+	#done
+	cd ~/Desktop/Fall\ 2019
+}
+
+alias gu="cd ~/Projects/university"
+alias ge="cd /media/"$USER"/External\ New"
+
+alias gu="cd ~/Projects/university"
+alias gus="cd ~/Projects/university/scripts"
+alias ge="cd /media/"$USER"/External\ New"
+
+alias gp="cd ~/Projects"
+alias gpb="cd ~/Projects/backed-development"
+alias gpw="cd ~/Projects/website"
+
+alias us="cp -ar /usr/lib/python3/dist-packages/starbucksautoma/* ~/Projects/starbucks_automa_production/src/usr/lib/python3/dist-packages/starbucksautoma/"
+
+alias ue="umount /media/"$USER"/External\ New && sleep 3 && notify-send 'You can now unplug External New'"
+alias ua="umount /media/"$USER"/*"
+alias sz="source ~/.zshrc"
+alias lg="sudo find "$HOME" -type d -name '.git'"
+alias zrc="vim ~/.zshrc"
+alias vrc="vim ~/.vimrc"
+alias vx="vim ~/.Xresources"
+alias ut="uptime -p"
+alias up="sudo apt-get update && sudo apt-get upgrade -y"
+alias bu="rsync -av --delete /media/jared/External\ New/* /media/jared/External"
+alias rs="Rscript"
+alias jsc="shutter -f -o java_screenshot.png > /dev/null 2>&1 & disown"
+alias sl="ls"
+alias gs="cd ~/scripts"
+
+# Spotify API Credentials
+
+export SPOTIFY_SECRET_KEY="84c1c81be6f347629bf01b97fbbe883c"
+export SPOTIFY_AUTHENTICATOR_CLIENT_ID="e1f239ec0ee443689d6786fd3f397af1"
+export SPOTIFY_AUTHENTICATOR_CLIENT_SECRET="cbecd4d200f8482d910cb1db77d6f10c"
