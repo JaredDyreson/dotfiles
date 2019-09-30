@@ -17,15 +17,10 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'tmhedberg/SimpylFold'
 Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'ying17zi/vim-live-latex-preview'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'PratikBhusal/vim-grip'
-Plugin 'junegunn/goyo.vim'
-Plugin 'mattn/emmet-vim'
 
 call vundle#end()
 
@@ -104,10 +99,10 @@ autocmd BufWritePost ~/.Xresources !xrdb ~/.Xresources
 autocmd BufWritePost ~/.zshrc !source ~/.zshrc
 
 "Autocomplete for programming languages
-Bundle 'Valloric/YouCompleteMe'
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+" Bundle 'Valloric/YouCompleteMe'
+" let g:ycm_autoclose_preview_window_after_completion=1
+" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 
 
 " WORD PROCESSING

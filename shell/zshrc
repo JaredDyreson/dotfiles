@@ -1,5 +1,10 @@
+# MACROS
+
+export D="$(date '+%Y-%m-%d')"
+
 # colors, all the colors!
-red="\033[1;31m"
+
+RED="\033[1;31m"
 GREEN="\033[1;32m"
 BLUE="\033[1;34m"
 NOCOLOR="\033[0m"
@@ -88,12 +93,7 @@ esac
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='vim'
- fi
+[[ -n "$SSH_CONNECTION" ]] && export EDITOR='vim' || export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -105,10 +105,6 @@ esac
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Small repetitive commands
 rm -r ~/.zcompdump*
@@ -123,10 +119,6 @@ export PATH="/home/jared/.ebcli-virtual-env/executables:$PATH"
 
 
 # Functions and aliases
-
-#alias x="xdg-open . > /dev/null 2>&1 & disown"
-
-
 
 # defined functions that would not fit in a simple alias command
 prompt_context() {}
@@ -235,8 +227,6 @@ function full_bak() {
 	# Write documentation about this process []
 	# Go through External and delete all unecessary files [] (Please try to make the total size no more than 128 GB. This is a goal that should be attained but not mandatory. It is an incentive to delete more unecessary crap)
 
-	# 
-
 	find ~/Projects -name '\.git' | while read repository; do
 		l=$(echo "$repository" | sed 's/\.git//')
 		echo ""$BLUE"Project: $(basename $l)"$NOCOLOR""
@@ -282,8 +272,7 @@ function meme_template() {
 }
 
 function batt_drain() {
-	[[ "$(whoami)" != "root" ]] && (echo "[-] Run as root";exit)
-	stress --cpu 4 --io 2 -vm2 --vm-bytes 128M
+	[[ "$(whoami)" != "root" ]] && exit || stress --cpu 4 --io 2 -vm2 --vm-bytes 128M
 }
 
 function slide_show(){ feh -F -D90 --recursive --randomize --auto-zoom ~/Pictures }
@@ -295,6 +284,9 @@ function clone_drive { rsync -av --delete /media/jared/New\ External/* /media/ja
 # awk '/a/ && /b/ && ! /c/ && /d/' --> grep 'a' | grep 'b' | grep -v 'c' | grep 'd'
 
 # sudo apt-get install intel-microcode microcode.ctl -y
+
+## SOURCING THINGS ##
+
 source /home/jared/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # ALIASES #
@@ -305,47 +297,47 @@ alias gh="cd ~"
 alias ga="cd ~/Applications"
 alias gai="cd ~/Applications/Cydia\ Impactor"
 alias cdd="cd ~/Desktop"
-
-function cdds(){
-	goto="$HOME/Desktop"
-	#cd "$HOME"/Desktop
-	#find -L . -maxdepth 1 -type d | while read line; do 
-		#[[ "$(echo "$line" | egrep '[Fall|Spring] [0-9]{4}')" ]] && goto="$line"
-	#	echo "$line"
-	#done
-	cd ~/Desktop/Fall\ 2019
-}
-
-alias gu="cd ~/Projects/university"
-alias ge="cd /media/"$USER"/External\ New"
-
-alias gu="cd ~/Projects/university"
-alias gus="cd ~/Projects/university/scripts"
-alias ge="cd /media/"$USER"/External\ New"
+alias cdds="cd '$(find ~/Desktop | while read line; do [[ -L "$line" ]] && echo "$line"; done)'"
 
 alias gp="cd ~/Projects"
+alias gu="cd ~/Projects/university"
+alias gus="cd ~/Projects/university/scripts"
 alias gpb="cd ~/Projects/backed-development"
 alias gpw="cd ~/Projects/website"
 
-alias us="cp -ar /usr/lib/python3/dist-packages/starbucksautoma/* ~/Projects/starbucks_automa_production/src/usr/lib/python3/dist-packages/starbucksautoma/"
+alias ge="cd /media/"$USER"/External\ New"
+alias gs="cd ~/scripts"
 
+## MACROS FOR MISC OPERATIONS ##
+
+alias us="cp -ar /usr/lib/python3/dist-packages/starbucksautoma/* ~/Projects/starbucks_automa_production/src/usr/lib/python3/dist-packages/starbucksautoma/"
 alias ue="umount /media/"$USER"/External\ New && sleep 3 && notify-send 'You can now unplug External New'"
 alias ua="umount /media/"$USER"/*"
+
+## FILE MANIPULATION ##
+
 alias sz="source ~/.zshrc"
-alias lg="sudo find "$HOME" -type d -name '.git'"
 alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
 alias vx="vim ~/.Xresources"
+
+## SYSTEM MAINTAINCE ##
+
 alias ut="uptime -p"
 alias up="sudo apt-get update && sudo apt-get upgrade -y"
-alias bu="rsync -av --delete /media/jared/External\ New/* /media/jared/External"
+alias lg="sudo find "$HOME" -type d -name '.git'"
+alias bp="dpkg -l | awk '/Name/{y=1;next}y {print $2}' | sed '/^$/d' > ~/Projects/thin-mint/current_installed/$D.txt"
+
+## APPLICATION MACROS ##
+
 alias rs="Rscript"
 alias jsc="shutter -f -o java_screenshot.png > /dev/null 2>&1 & disown"
 alias sl="ls"
-alias gs="cd ~/scripts"
+
 
 # Spotify API Credentials
 
 export SPOTIFY_SECRET_KEY="84c1c81be6f347629bf01b97fbbe883c"
 export SPOTIFY_AUTHENTICATOR_CLIENT_ID="e1f239ec0ee443689d6786fd3f397af1"
 export SPOTIFY_AUTHENTICATOR_CLIENT_SECRET="cbecd4d200f8482d910cb1db77d6f10c"
+
