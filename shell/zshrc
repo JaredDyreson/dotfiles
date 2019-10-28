@@ -17,7 +17,7 @@ setopt no_share_history
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/jared/.oh-my-zsh"
-alias ls='ls --color=auto'
+alias ls='ls -v --color=auto'
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -159,6 +159,29 @@ function bak_pref() {
 	cd "$prev"
 }
 
+function bu(){
+	prev="$PWD"
+	echo ""$BLUE"Project: university"$NOCOLOR""
+    cd ~/Desktop/Fall\ 2019/
+    find . -maxdepth 1 -type d | while read dir; do
+        GOTO="$dir"/notes/exported
+        waypoint="$PWD"
+        if [[ -d "$GOTO" ]]; then
+            SUBJECT="$(echo "$dir" | sed 's/\.\///g')"
+            echo ""$GREEN"[+] Compiling $SUBJECT notes"$NOCOLOR""
+            cd "$GOTO"
+            pdftk $(ls -v) cat output ../compiled_"$SUBJECT"_notes.pdf
+            cd "$waypoint"
+        fi
+    done
+    cd ~/Projects/university/
+    echo ""$GREEN"[+] Finished compiling, now committing to Github..."$NOCOLOR""
+    git add * 
+    git commit -m 'Automatic backup from the terminal...beep bloop'
+    git push origin master
+	cd "$prev"
+}
+
 
 export RANGER_LOAD_DEFAULT_RC=false
 VISUAL=editor; export VISUAL EDITOR=vim; export EDITOR
@@ -285,9 +308,6 @@ function clone_drive { rsync -av --delete /media/jared/New\ External/* /media/ja
 
 # sudo apt-get install intel-microcode microcode.ctl -y
 
-## SOURCING THINGS ##
-
-source /home/jared/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # ALIASES #
 
@@ -307,6 +327,9 @@ alias gpw="cd ~/Projects/website"
 
 alias ge="cd /media/"$USER"/External\ New"
 alias gs="cd ~/scripts"
+
+## BACKING UP ##
+
 
 ## MACROS FOR MISC OPERATIONS ##
 
@@ -334,6 +357,13 @@ alias rs="Rscript"
 alias jsc="shutter -f -o java_screenshot.png > /dev/null 2>&1 & disown"
 alias sl="ls"
 
+## POWER MANAGEMENT ##
+
+# turning suspend when inactive while on battery power (for YouTube and other idle activities)
+
+alias pma="dconf write /org/cinnamon/settings-daemon/plugins/power/sleep-inactive-battery-timeout 600"
+alias pmd="dconf write /org/cinnamon/settings-daemon/plugins/power/sleep-inactive-battery-timeout 0"
+
 
 # Spotify API Credentials
 
@@ -341,3 +371,6 @@ export SPOTIFY_SECRET_KEY="84c1c81be6f347629bf01b97fbbe883c"
 export SPOTIFY_AUTHENTICATOR_CLIENT_ID="e1f239ec0ee443689d6786fd3f397af1"
 export SPOTIFY_AUTHENTICATOR_CLIENT_SECRET="cbecd4d200f8482d910cb1db77d6f10c"
 
+## SOURCING THINGS ##
+
+source /home/jared/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
