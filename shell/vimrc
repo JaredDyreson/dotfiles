@@ -8,6 +8,8 @@ set background=dark
 "" Spell Checking
 autocmd BufRead,BufNewFile *.md,*.tex setlocal spell
 set complete+=kspell
+set clipboard=unnamedplus
+
 
 " Making sure the vundle settings are working accordingly
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -33,7 +35,8 @@ set t_Co=256
 set autoindent
 set smartindent
 
-autocmd BufRead,BufNewFile *.py setlocal tabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.py,*.md setlocal tabstop=2 shiftwidth=2
+" :set tabstop=2 shiftwidth=2 expandtab | retab  
 set expandtab
 set number 
 set encoding=utf-8 
@@ -94,6 +97,8 @@ autocmd FileType r nnoremap <buffer> <C-c> :!clear && r_stat_run % <Enter>
 autocmd FileType cs nnoremap <buffer> <C-c> :!clear && c_sharp_compile % <Enter>
 autocmd FileType text nnoremap <buffer> <C-c> :! clear && compile_plain_text % <Enter>
 
+" Export code to PDF with syntax highlighting
+autocmd FileType c,cpp,python,bash,zsh nnoremap <buffer> <C-e> :! clear && csrc % <Enter>
 " Push to Github directly from a vim buffer
 " nnoremap <C-g> :!github_push % <Enter>
 

@@ -214,7 +214,7 @@ function nblog(){
 function nmla() {
 	[[ -z "$1" ]] && (echo "[-] Provide name for article";exit)
 	if [[ ! -f "$1" ]]; then
-		cp -ar ~/Projects/university/LaTeX\ Templates/MLA_Template.tex ./"$1".tex
+		cp -ar ~/Projects/university/LaTeX\ Templates/papers/mla.tex ./"$1".tex
 		perl -i -pe "s/.*/$1/ if $.==62;s/CURRENT\ DATE/$CURRENT/" "$1".tex
 	else
 		vim "$1".tex
@@ -374,3 +374,10 @@ export SPOTIFY_AUTHENTICATOR_CLIENT_SECRET="cbecd4d200f8482d910cb1db77d6f10c"
 ## SOURCING THINGS ##
 
 source /home/jared/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+function ff(){
+        base="/home/jared/Desktop/Fall 2019/MATH-338"
+        expression="$1"
+        [[ -z "$expression" ]] && return
+        find "$base"/labs "$base"/exam_two/helpful_scripts "$base"/exam_two/script_tree -type f -name '*.r' -exec grep --color=always -ni "$1" {} /dev/null \;
+}
