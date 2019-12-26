@@ -9,11 +9,13 @@ panels-height=['1:33']
 picture-uri='file:///home/jared/Pictures/Wallpapers/venom_wallpaper.jpg'
 
 [org/cinnamon/desktop/interface]
+clock-show-date=true
+text-scaling-factor=1.0
 cursor-blink-time=1200
-cursor-theme='Adwaita'
+clock-use-24h=true
+cursor-theme='DMZ-Black'
 gtk-theme='Mint-Y-Dark'
 icon-theme='Flat-Remix-Blue'
-text-scaling-factor=1.0
 
 [org/cinnamon/desktop/keybindings]
 custom-list=['custom0', 'custom1', 'custom2', 'custom3', 'custom4']
