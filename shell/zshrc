@@ -113,7 +113,7 @@ git config --global credential.helper 'cache --timeout=3600'
 # Exports
 export PAGER="most"
 export ZSH_THEME="common"
-PATH=$PATH$(find "$HOME/scripts" -type d -not -path '*/\.*' -printf ":%p")
+PATH=$PATH$(fin "$HOME/scripts" -type d -not -path '*/\.*' -printf ":%p")
 export PATH="/home/jared/.ebcli-virtual-env/executables:$PATH"
 # BEGIN PERSONAL EDITS #
 
