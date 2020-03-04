@@ -23,8 +23,8 @@ Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'scrooloose/nerdcommenter'
-
-" Plugin 'python-mode/python-mode'
+Plugin 'tpope/vim-surround'
+Plugin 'dkarter/bullets.vim'
 
 call vundle#end()
 
@@ -34,8 +34,9 @@ syntax enable
 set t_Co=256
 set autoindent
 set smartindent
+"autocmd FileType vim let b:vcm_tab_complete = 'vim'
 
-autocmd BufRead,BufNewFile *.py,*.md setlocal tabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile * setlocal tabstop=2 shiftwidth=2
 " :set tabstop=2 shiftwidth=2 expandtab | retab  
 set expandtab
 set number 
@@ -52,6 +53,7 @@ inoremap <S-Tab> <C-d>
 nnoremap <S-Tab> <<
 inoremap <Tab> <C-t>
 nnoremap <Tab> >>
+vnoremap <C-y> y: echo getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]] <Enter>
 
 "This is so I can have proper copy pasting format
 
@@ -88,7 +90,7 @@ set autowrite
 autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
 autocmd FileType tex nnoremap <buffer> <C-c> :!make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
-autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python3.5 % <Enter>
+autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python % <Enter>
 autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>
 autocmd FileType php nnoremap <buffer> <C-c> :!clear && php % <Enter>
 autocmd FileType rmd,markdown nnoremap <buffer> <C-c> :!clear && compile_markdown % <Enter>

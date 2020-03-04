@@ -77,7 +77,6 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git reminder)
 
 source $ZSH/oh-my-zsh.sh
 case "$TERM" in
@@ -113,7 +112,7 @@ git config --global credential.helper 'cache --timeout=3600'
 # Exports
 export PAGER="most"
 export ZSH_THEME="common"
-PATH=$PATH$(fin "$HOME/scripts" -type d -not -path '*/\.*' -printf ":%p")
+PATH=$PATH$(find "$HOME/scripts" -type d -not -path '*/\.*' -printf ":%p")
 export PATH="/home/jared/.ebcli-virtual-env/executables:$PATH"
 # BEGIN PERSONAL EDITS #
 
@@ -350,6 +349,13 @@ alias ut="uptime -p"
 alias up="sudo apt-get update && sudo apt-get upgrade -y"
 alias lg="sudo find "$HOME" -type d -name '.git'"
 alias bp="dpkg -l | awk '/Name/{y=1;next}y {print $2}' | sed '/^$/d' > ~/Projects/thin-mint/current_installed/$D.txt"
+alias dvc="rm -rf ~/.cache/vim/swap/*"
+
+function rmb(){
+  find . -type f | while read file; do 
+    [[ "$(file "$file" | grep "ELF")" ]] && rm -f "$file"
+  done
+}
 
 ## APPLICATION MACROS ##
 
@@ -380,4 +386,30 @@ function ff(){
         expression="$1"
         [[ -z "$expression" ]] && return
         find "$base"/labs "$base"/exam_two/helpful_scripts "$base"/exam_two/script_tree -type f -name '*.r' -exec grep --color=always -ni "$1" {} /dev/null \;
+}
+
+LOCAL_PATH="$HOME/.local/bin/"
+export PATH="$LOCAL_PATH:$PATH:/home/jared/.gem/ruby/2.6.0/bin"
+alias vi="vim"
+
+function kapp(){
+  # kill all instances of an application
+  application_name="$(echo "$1" | awk '{print tolower($0)}')"
+  [[ -z "$@" ]] && (echo "no application name supplied, cannot kill processes."; exit)
+  ps aux | grep "$application_name"  | grep -v 'grep' |  awk '{print $2}' | while read process; do 
+    kill -9 "$process"
+  done
+}
+
+function oapp(){
+  application_name="$(echo "$1" | awk '{print tolower($0)}')"
+	"$application_name" > /dev/null 2>&1 & disown
+}
+
+# kill all the open instances of xreader
+alias kpdf="kapp xreader"
+
+function hmem(){
+  # show top 10 most resource hungry processes
+  ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
 }
