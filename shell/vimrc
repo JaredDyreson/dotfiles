@@ -53,7 +53,6 @@ inoremap <S-Tab> <C-d>
 nnoremap <S-Tab> <<
 inoremap <Tab> <C-t>
 nnoremap <Tab> >>
-vnoremap <C-y> y: echo getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]] <Enter>
 
 "This is so I can have proper copy pasting format
 
