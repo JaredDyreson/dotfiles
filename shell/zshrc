@@ -140,11 +140,6 @@ function bak_pref() {
 
 	cp -ar ~/.Xresources ~/Projects/dotfiles/terminal/Xresources
 
-	# terminal applications
-
-	cp -ar ~/.config/ranger/rc.conf ~/Projects/dotfiles/ranger
-	cp -ar ~/.config/ranger/rifle.conf ~/Projects/dotfiles/ranger
-
 	cd ~/Projects/dotfiles
 	echo ""$BLUE"Project: dotfiles"$NOCOLOR""
 	git add *
