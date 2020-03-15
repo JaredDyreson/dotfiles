@@ -107,6 +107,8 @@ autocmd FileType c,cpp,python,bash,zsh nnoremap <buffer> <C-e> :! clear && csrc 
 autocmd BufWritePost ~/.Xresources !xrdb ~/.Xresources
 autocmd BufWritePost ~/.zshrc !source ~/.zshrc
 
+"let g:victionary#dictionary = g:victionary#WORD_NET
+
 "Autocomplete for programming languages
 " Bundle 'Valloric/YouCompleteMe'
 " let g:ycm_autoclose_preview_window_after_completion=1
