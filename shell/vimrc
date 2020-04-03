@@ -106,7 +106,7 @@ autocmd FileType c,cpp,python,bash,zsh nnoremap <buffer> <C-e> :! clear && csrc 
 
 " Run commands for certain files when saved
 autocmd BufWritePost ~/.Xresources !xrdb ~/.Xresources
-autocmd BufWritePost ~/.zshrc !source ~/.zshrc
+"autocmd BufWritePost ~/.zshrc !source ~/.zshrc
 
 "let g:victionary#dictionary = g:victionary#WORD_NET
 
