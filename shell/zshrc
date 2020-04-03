@@ -327,7 +327,7 @@ alias gs="cd ~/scripts"
 
 ## MACROS FOR MISC OPERATIONS ##
 
-alias us="cp -ar /usr/lib/python3/dist-packages/starbucksautoma/* ~/Projects/starbucks_automa_production/src/usr/lib/python3/dist-packages/starbucksautoma/"
+alias us="cp -ar /usr/lib/python3.8/starbucksautoma/* ~/Projects/starbucks_automa_production/usr/lib/python3.8/starbucksautoma/"
 alias ue="umount /media/"$USER"/External\ New && sleep 3 && notify-send 'You can now unplug External New'"
 alias ua="umount /media/"$USER"/*"
 
@@ -408,3 +408,12 @@ function hmem(){
   # show top 10 most resource hungry processes
   ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
 }
+alias cddc="cd ~/Desktop/C-Programming/"
+alias rw="restart_wifi"
+
+#function git_patcher(){
+  #[[ ! -d ".git" ]] && exit 1
+  #[[ "$(git)" ]]
+#}
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # Th

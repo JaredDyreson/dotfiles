@@ -6,7 +6,7 @@ filetype off
 set background=dark
 
 "" Spell Checking
-autocmd BufRead,BufNewFile *.md,*.tex setlocal spell
+autocmd BufRead,BufNewFile *.md,*.tex,*.txt setlocal spell
 set complete+=kspell
 set clipboard=unnamedplus
 
@@ -25,6 +25,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'dkarter/bullets.vim'
+Plugin 'beloglazov/vim-online-thesaurus'
 
 call vundle#end()
 
