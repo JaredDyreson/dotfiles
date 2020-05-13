@@ -74,21 +74,11 @@ endfunction
 
 " PROGRAMMING
 
-" CPP
-" These were inspired by Luke Smith's LaTeX scripts found below
-
-" External header
-autocmd FileType cpp,hpp inoremap ,eh #include <<++>><ESC>i
-" Local header
-autocmd FileType cpp,hpp inoremap ,lh #include "<++>"<ESC>i
-autocmd FileType cpp,hpp inoremap ,t template <typename T><Enter><ESC>i
-autocmd FileType markdown inoremap ,s ```<++><Enter>```<Enter><ESC>i
-
 " Make run from Vim (gcc, clang, jcomp, pdflatex)
 
 set autowrite
 autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
-autocmd FileType tex nnoremap <buffer> <C-c> :!make_run_latex "%" <Enter>
+autocmd FileType tex nnoremap <buffer> <C-c> :!clear && make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
 autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python % <Enter>
 autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>

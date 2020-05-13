@@ -304,14 +304,6 @@ LOCAL_PATH="$HOME/.local/bin/"
 export PATH="$LOCAL_PATH:$PATH:/home/jared/.gem/ruby/2.6.0/bin"
 alias vi="vim"
 
-function kapp(){
-  # kill all instances of an application
-  application_name="$(echo "$1" | awk '{print tolower($0)}')"
-  [[ -z "$@" ]] && (echo "no application name supplied, cannot kill processes."; exit)
-  ps aux | grep "$application_name"  | grep -v 'grep' |  awk '{print $2}' | while read process; do 
-    kill -9 "$process"
-  done
-}
 
 function oapp(){
   application_name="$(echo "$1" | awk '{print tolower($0)}')"
@@ -334,3 +326,19 @@ alias rw="restart_wifi"
 #}
 #
 source /home/jared/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+function show_colour() {
+  [[ -z "$@" ]] && return
+  for color in "$@"; do
+    printf '\e]4;1;%s\a\e[0;41m   \n   \n\e[m' "$color"
+    echo -e "\n"
+  done
+}
+
+function connectheadphones(){
+  echo "connect 2C:41:A1:82:F3:15" | bluetoothctl
+}
+
+function disconnectheadphones(){
+  echo "disconnect 2C:41:A1:82:F3:15" | bluetoothctl
+}
