@@ -10,12 +10,13 @@ picture-uri='file:///home/jared/Pictures/Wallpapers/venom_wallpaper.jpg'
 
 [org/cinnamon/desktop/interface]
 clock-show-date=true
-text-scaling-factor=1.0
-cursor-blink-time=1200
 clock-use-24h=true
+cursor-blink-time=1200
 cursor-theme='DMZ-Black'
 gtk-theme='Mint-Y-Dark'
 icon-theme='Flat-Remix-Blue'
+scaling-factor=uint32 1
+text-scaling-factor=1.0
 
 [org/cinnamon/desktop/keybindings]
 custom-list=['custom0', 'custom1', 'custom2', 'custom3', 'custom4']
@@ -62,7 +63,7 @@ titlebar-font='Noto Sans 10'
 
 [org/cinnamon/settings-daemon/peripherals/keyboard]
 delay=uint32 500
-numlock-state='on'
+numlock-state='off'
 repeat-interval=uint32 30
 
 [org/cinnamon/settings-daemon/plugins/xsettings]
