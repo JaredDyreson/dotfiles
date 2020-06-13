@@ -2,6 +2,7 @@
 " Minimal .vimrc for C/C++ Developers -> https://gist.github.com/rocarvaj/2513367
 
 set nocompatible
+set wildmenu
 filetype off
 set background=dark
 
