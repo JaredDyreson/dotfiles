@@ -342,3 +342,5 @@ function connectheadphones(){
 function disconnectheadphones(){
   echo "disconnect 2C:41:A1:82:F3:15" | bluetoothctl
 }
+
+alias get_arch="wget http://mirror.sfo12.us.leaseweb.net/archlinux/iso/2020.06.01/archlinux-2020.06.01-x86_64.iso ~/Desktop"

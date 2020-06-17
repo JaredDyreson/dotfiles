@@ -19,14 +19,19 @@ call vundle#begin()
 " List of our packages
 
 Plugin 'gmarik/Vundle.vim'
+
+" Python
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Vimjas/vim-python-pep8-indent'
-Plugin 'nathanaelkane/vim-indent-guides'
+
+" Plugin 'nathanaelkane/vim-indent-guides'
+
+" Ease of use
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'dkarter/bullets.vim'
-Plugin 'beloglazov/vim-online-thesaurus'
+
 
 call vundle#end()
 
@@ -38,7 +43,7 @@ set autoindent
 set smartindent
 "autocmd FileType vim let b:vcm_tab_complete = 'vim'
 
-autocmd BufRead,BufNewFile * setlocal tabstop=2 shiftwidth=2
+"autocmd BufRead,BufNewFile * setlocal tabstop=2 shiftwidth=2
 " :set tabstop=2 shiftwidth=2 expandtab | retab  
 set expandtab
 set number 
@@ -81,7 +86,12 @@ set autowrite
 autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
 autocmd FileType tex nnoremap <buffer> <C-c> :!clear && make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
+
 autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python % <Enter>
+autocmd FileType python nnoremap <buffer> <C-e> :!clear && python_syntax % <Enter>
+autocmd FileType python nnoremap <buffer> <C-i> :!clear && python <Enter>
+autocmd FileType python map <buffer> <C-p> :call flake8#Flake8()<CR>
+
 autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>
 autocmd FileType php nnoremap <buffer> <C-c> :!clear && php % <Enter>
 autocmd FileType rmd,markdown nnoremap <buffer> <C-c> :!clear && compile_markdown % <Enter>
@@ -90,22 +100,6 @@ autocmd FileType r nnoremap <buffer> <C-c> :!clear && r_stat_run % <Enter>
 autocmd FileType cs nnoremap <buffer> <C-c> :!clear && c_sharp_compile % <Enter>
 autocmd FileType text nnoremap <buffer> <C-c> :! clear && compile_plain_text % <Enter>
 
-" Export code to PDF with syntax highlighting
-autocmd FileType c,cpp,python,bash,zsh nnoremap <buffer> <C-e> :! clear && csrc % <Enter>
-" Push to Github directly from a vim buffer
-" nnoremap <C-g> :!github_push % <Enter>
-
-" Run commands for certain files when saved
-autocmd BufWritePost ~/.Xresources !xrdb ~/.Xresources
-"autocmd BufWritePost ~/.zshrc !source ~/.zshrc
-
-"let g:victionary#dictionary = g:victionary#WORD_NET
-
-"Autocomplete for programming languages
-" Bundle 'Valloric/YouCompleteMe'
-" let g:ycm_autoclose_preview_window_after_completion=1
-" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 
 let g:pymode_options_colorcolumn = 0
 
@@ -126,3 +120,23 @@ filetype plugin on
 autocmd FileType tex,rmd,markdown exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
 set completeopt=menuone,longest,preview
 set complete+=k
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>
+
+" Python shit
+let g:flake8_show_in_file=1  " show
+let g:flake8_quickfix_location="vertical topleft"
+let g:flake8_quickfix_height=75
