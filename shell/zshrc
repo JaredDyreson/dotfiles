@@ -72,6 +72,13 @@ function bak_pref() {
 	git commit -m "Automatically backing up scripts"
 	git push origin master
 	cd "$prev"
+        echo ""$BLUE"Project: installed pkgs"$NOCOLOR""
+        cd ~/Projects/thin-mint/
+        list_installed
+        git add *
+        git commit -m "Automatically backing up installed packages"
+        git push origin master
+
 }
 
 function bu(){
@@ -344,3 +351,4 @@ function disconnectheadphones(){
 }
 
 alias get_arch="wget http://mirror.sfo12.us.leaseweb.net/archlinux/iso/2020.06.01/archlinux-2020.06.01-x86_64.iso ~/Desktop"
+alias usa="sudo pip install --upgrade git+https://github.com/JaredDyreson/starbucks_automa_production#egg=httpie"
