@@ -81,6 +81,11 @@ function bak_pref() {
 
 }
 
+function upgrade(){
+        yay -Syu --noconfirm
+        bak_pref
+}
+
 function bu(){
 	prev="$PWD"
 	echo ""$BLUE"Project: university"$NOCOLOR""
@@ -352,3 +357,4 @@ function disconnectheadphones(){
 
 alias get_arch="wget http://mirror.sfo12.us.leaseweb.net/archlinux/iso/2020.06.01/archlinux-2020.06.01-x86_64.iso ~/Desktop"
 alias usa="sudo pip install --upgrade git+https://github.com/JaredDyreson/starbucks_automa_production#egg=httpie"
+
