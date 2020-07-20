@@ -355,6 +355,28 @@ function disconnectheadphones(){
   echo "disconnect 2C:41:A1:82:F3:15" | bluetoothctl
 }
 
+function pip_git(){
+    sudo pip install --upgrade git+"$1"#egg=httpie
+}
+
 alias get_arch="wget http://mirror.sfo12.us.leaseweb.net/archlinux/iso/2020.06.01/archlinux-2020.06.01-x86_64.iso ~/Desktop"
 alias usa="sudo pip install --upgrade git+https://github.com/JaredDyreson/starbucks_automa_production#egg=httpie"
 
+function reload_site(){
+    site="https://www.jareddyreson.xyz"
+    ssh -t root@"$(basename $site)" 'update_server && echo Success'
+    sleep 2
+    [[ "$(curl --silent "$site")" ]] && echo "up" || echo "down"
+}
+
+function new_invoice(){
+    invoice_dir="$HOME/Documents/lancer-invoices"
+    current="$(date '+%Y-%m-%d')"
+    unset subject
+    vared -p "Subject: " -c subject
+    subject="$(sed 's/\ /_/g' <<< "$subject")"
+    new_invoice="$invoice_dir/"$current"_"$subject".zip"
+    echo -n '\x50\x4b\x05\x06\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' > "$new_invoice"
+    file-roller "$new_invoice"
+    gpg -c "$new_invoice"
+}
