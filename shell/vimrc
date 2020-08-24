@@ -91,12 +91,12 @@ set autowrite
 autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
 autocmd FileType tex nnoremap <buffer> <C-c> :!clear && make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
+autocmd FileType go nnoremap <buffer> <C-c> :!clear && go run % <Enter>
 
 " Python 
 
 autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python % <Enter>
 autocmd FileType python nnoremap <buffer> <C-e> :!clear && python_syntax % <Enter>
-"autocmd FileType python nnoremap <buffer> <C-i> :!clear && python <Enter>
 autocmd FileType python map <buffer> <C-p> :call flake8#Flake8()<CR>
 
 autocmd FileType cs nnoremap <buffer> <C-c> :!clear && c_sharp_compile % <Enter>
@@ -104,8 +104,12 @@ autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>
 autocmd FileType php nnoremap <buffer> <C-c> :!clear && php % <Enter>
 autocmd FileType r nnoremap <buffer> <C-c> :!clear && r_stat_run % <Enter>
 autocmd FileType rmd nnoremap <buffer> <C-c> :!clear && compile_r_markdown % <Enter>
-autocmd FileType rmd,markdown nnoremap <buffer> <C-c> :!clear && compile_markdown % <Enter>
+autocmd FileType rmd,markdown nnoremap <buffer> <C-c> :!clear && mdserver % <Enter>
+autocmd FileType rmd,markdown nnoremap <buffer> <C-q> :!clear && kill_mdserver <Enter>
+"autocmd BufWinLeave markdown :! echo "Hello" >> /tmp/exited.txt
+"autocmd FileType rmd,markdown nnoremap <buffer> <C-c> :!clear && compile_markdown % <Enter>
 autocmd FileType text nnoremap <buffer> <C-c> :! clear && compile_plain_text % <Enter>
+autocmd FileType javascript nnoremap <buffer> <C-c> :! clear && node % <Enter>
 
 " C++ Code formatting
 
