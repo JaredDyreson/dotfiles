@@ -21,6 +21,7 @@ Plugin 'gmarik/Vundle.vim'
 " Python
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Vimjas/vim-python-pep8-indent'
+Plugin 'vim-python/python-syntax'
 
 " Plugin 'nathanaelkane/vim-indent-guides'
 
@@ -29,11 +30,15 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'dkarter/bullets.vim'
+Plugin 'tomasiser/vim-code-dark'
 
 " C++
 
 Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
+
+" LaTeX
+Plugin 'xuhdev/vim-latex-live-preview'
 
 call vundle#end()
 
@@ -46,7 +51,7 @@ set smartindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
-
+let g:python_highlight_all = 1
 
 "autocmd FileType vim let b:vcm_tab_complete = 'vim'
 
@@ -89,7 +94,8 @@ endfunction
 set autowrite
 
 autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
-autocmd FileType tex nnoremap <buffer> <C-c> :!clear && make_run_latex "%" <Enter>
+autocmd FileType tex nnoremap <buffer> <C-c> :LLPStartPreview <Enter>
+"autocmd FileType tex nnoremap <buffer> <C-c> :!clear && make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
 autocmd FileType go nnoremap <buffer> <C-c> :!clear && go run % <Enter>
 
@@ -100,21 +106,25 @@ autocmd FileType python nnoremap <buffer> <C-e> :!clear && python_syntax % <Ente
 autocmd FileType python map <buffer> <C-p> :call flake8#Flake8()<CR>
 
 autocmd FileType cs nnoremap <buffer> <C-c> :!clear && c_sharp_compile % <Enter>
+
 autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>
 autocmd FileType php nnoremap <buffer> <C-c> :!clear && php % <Enter>
+
 autocmd FileType r nnoremap <buffer> <C-c> :!clear && r_stat_run % <Enter>
+
 autocmd FileType rmd nnoremap <buffer> <C-c> :!clear && compile_r_markdown % <Enter>
 autocmd FileType rmd,markdown nnoremap <buffer> <C-c> :!clear && mdserver % <Enter>
-autocmd FileType rmd,markdown nnoremap <buffer> <C-q> :!clear && kill_mdserver <Enter>
-"autocmd BufWinLeave markdown :! echo "Hello" >> /tmp/exited.txt
-"autocmd FileType rmd,markdown nnoremap <buffer> <C-c> :!clear && compile_markdown % <Enter>
+autocmd FileType markdwon nnoremap <buffer> :w <CR> :! echo "Hello" <Enter>
+
+let g:livepreview_previewer = 'xreader'
+
 autocmd FileType text nnoremap <buffer> <C-c> :! clear && compile_plain_text % <Enter>
 autocmd FileType javascript nnoremap <buffer> <C-c> :! clear && node % <Enter>
 
 " C++ Code formatting
-
 autocmd FileType cpp set tabstop=2
 autocmd FileType cpp set shiftwidth=2
+
 
 " Python Code formatting
 
