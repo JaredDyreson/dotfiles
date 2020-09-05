@@ -381,3 +381,5 @@ function new_invoice(){
     file-roller "$new_invoice"
     gpg -c "$new_invoice"
 }
+
+#wal -a 75 -i ~/Pictures/Wallpapers/venom_wallpaper.jpg -q
