@@ -3,34 +3,28 @@
 ! https://github.com/lgaggini/dotfiles/blob/master/.Xresources
 URxvt*altSendsEscape: true
 
-!URxvt.keysym.Shift-Up: command:\033]720;1\007
-!URxvt.keysym.Shift-Down: command:\003]721;1\007
-
-
-!! Acai Theme
-
 URxvt.font: xft:bitstream vera sans mono:size=12
 
-URxvt*color0:     #363636
-URxvt*color1:     #ff0883
-URxvt*color2:     #83ff08
-URxvt*color3:     #ff8308
-URxvt*color4:     #0883ff
-URxvt*color5:     #8308ff
-URxvt*color6:     #08ff83
-URxvt*color7:     #b6b6b6
-URxvt*color8:     #424242
-URxvt*color9:     #ff1e8e
-URxvt*color10:    #8eff1e
-URxvt*color11:    #ff8e1e
-URxvt*color12:    #a26cc9
-URxvt*color13:    #a26cc9
-URxvt*color14:    #1eff8e
-URxvt*color15:    #c2c2c2
+URxvt*color0:     #000000
+URxvt*color1:     #DD0D24
+URxvt*color2:     #A14030
+URxvt*color3:     #C09369
+URxvt*color4:     #467785
+URxvt*color5:     #3FACC1
+URxvt*color6:     #BCB1A1
+URxvt*color7:     #caf1f2
+URxvt*color8:     #8da8a9
+URxvt*color9:     #DD0D24
+URxvt*color10:    #A14030
+URxvt*color11:    #C09369
+URxvt*color12:    #467785
+URxvt*color13:    #3FACC1
+URxvt*color14:    #BCB1A1
+URxvt*color15:    #caf1f2
 
 urxvt*depth: 32
 URxvt.background: [95]#0d1926
-URxvt.foreground: #b4e1fd
+URxvt.foreground: #caf1f2
 URxvt.cursorUnderline: true
 URxvt.cursorBlink: true
 
