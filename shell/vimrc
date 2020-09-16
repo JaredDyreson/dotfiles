@@ -42,7 +42,6 @@ Plugin 'xuhdev/vim-latex-live-preview'
 
 call vundle#end()
 
-"filetype indent on
 syntax on
 syntax enable
 set t_Co=256
@@ -53,7 +52,7 @@ set shiftwidth=4
 set expandtab
 let g:python_highlight_all = 1
 
-"autocmd FileType vim let b:vcm_tab_complete = 'vim'
+autocmd FileType vim let b:vcm_tab_complete = 'vim'
 
 "autocmd BufRead,BufNewFile * setlocal tabstop=2 shiftwidth=2
 " :set tabstop=2 shiftwidth=2 expandtab | retab  
@@ -70,7 +69,7 @@ nnoremap <S-Tab> <<
 inoremap <Tab> <C-t>
 nnoremap <Tab> >>
 
-"This is so I can have proper copy pasting format
+" Copy/Paste Functionality
 
 let &t_SI .= "\<Esc>[?2004h"
 let &t_EI .= "\<Esc>[?2004l"
@@ -85,8 +84,6 @@ endfunction
 
 " Text Processing
 
-" Wrapping text around a word or phrase --> https://superuser.com/questions/875095/adding-parenthesis-around-highlighted-text-in-vim
-
 " PROGRAMMING
 
 " Make run from Vim (gcc, clang, jcomp, pdflatex)
@@ -95,6 +92,7 @@ set autowrite
 
 autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
 autocmd FileType tex nnoremap <buffer> <C-c> :LLPStartPreview <Enter>
+autocmd FileType tex nnoremap <buffer> <C-e> :!clear && make_run_latex "%" <Enter>
 "autocmd FileType tex nnoremap <buffer> <C-c> :!clear && make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
 autocmd FileType go nnoremap <buffer> <C-c> :!clear && go run % <Enter>
@@ -107,24 +105,24 @@ autocmd FileType python map <buffer> <C-p> :call flake8#Flake8()<CR>
 
 autocmd FileType cs nnoremap <buffer> <C-c> :!clear && c_sharp_compile % <Enter>
 
+" Web developement
 autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>
 autocmd FileType php nnoremap <buffer> <C-c> :!clear && php % <Enter>
+autocmd FileType javascript nnoremap <buffer> <C-c> :! clear && node % <Enter>
 
+" Statistics
 autocmd FileType r nnoremap <buffer> <C-c> :!clear && r_stat_run % <Enter>
 
+" Text processing
 autocmd FileType rmd nnoremap <buffer> <C-c> :!clear && compile_r_markdown % <Enter>
 autocmd FileType rmd,markdown nnoremap <buffer> <C-c> :!clear && mdserver % <Enter>
 autocmd FileType markdwon nnoremap <buffer> :w <CR> :! echo "Hello" <Enter>
-
-let g:livepreview_previewer = 'xreader'
-
 autocmd FileType text nnoremap <buffer> <C-c> :! clear && compile_plain_text % <Enter>
-autocmd FileType javascript nnoremap <buffer> <C-c> :! clear && node % <Enter>
+
 
 " C++ Code formatting
 autocmd FileType cpp set tabstop=2
 autocmd FileType cpp set shiftwidth=2
-
 
 " Python Code formatting
 
@@ -136,6 +134,8 @@ let g:flake8_quickfix_height=75
 
 " LaTeX
 
+let g:livepreview_previewer = 'xreader'
+
 " Navigating with guides
 inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
@@ -143,6 +143,9 @@ map <leader><leader> <Esc>/<++><Enter>"_c4l
 
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" : "\<TAB>"
 
 filetype plugin on
 autocmd FileType tex,rmd,markdown exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
@@ -162,8 +165,10 @@ function! InsertTabWrapper()
         return "\<c-p>"
     endif
 endfunction
+
 inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-n>
+
 
 let g:bullets_enabled_file_types = [
     \ 'markdown',

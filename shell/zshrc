@@ -338,7 +338,7 @@ alias rw="restart_wifi"
   #[[ "$(git)" ]]
 #}
 #
-source /home/jared/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/jared/.zsh_utils/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 function show_colour() {
   [[ -z "$@" ]] && return
@@ -385,3 +385,4 @@ function new_invoice(){
 #wal -a 75 -i ~/Pictures/Wallpapers/venom_wallpaper.jpg -q
 #
 alias plex="make_run_latex"
+alias publicip="wget http://ipecho.net/plain -O - -q && echo"
