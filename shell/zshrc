@@ -386,3 +386,10 @@ function new_invoice(){
 #
 alias plex="make_run_latex"
 alias publicip="wget http://ipecho.net/plain -O - -q && echo"
+
+# set filetypes
+
+xdg-mime default pix.desktop image/png 
+xdg-mime default pix.desktop image/jpg 
+xdg-mime default pix.desktop image/jpeg 
+xdg-mime default pix.desktop image/gif 

@@ -116,6 +116,7 @@ autocmd FileType r nnoremap <buffer> <C-c> :!clear && r_stat_run % <Enter>
 " Text processing
 autocmd FileType rmd nnoremap <buffer> <C-c> :!clear && compile_r_markdown % <Enter>
 autocmd FileType rmd,markdown nnoremap <buffer> <C-c> :!clear && mdserver % <Enter>
+autocmd FileType rmd,markdown nnoremap <buffer> <C-f> :!clear && formulate % <Enter>
 autocmd FileType markdwon nnoremap <buffer> :w <CR> :! echo "Hello" <Enter>
 autocmd FileType text nnoremap <buffer> <C-c> :! clear && compile_plain_text % <Enter>
 
