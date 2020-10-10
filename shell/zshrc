@@ -34,7 +34,8 @@ git config --global credential.helper 'cache --timeout=18000'
 export PAGER="most"
 export ZSH_THEME="common"
 PATH=$PATH$(find "$HOME/scripts" -type d -not -path '*/\.*' -printf ":%p")
-export PATH="/home/jared/.ebcli-virtual-env/executables:$PATH"
+#PATH=$PATH$(sed 's/\:/\n/g' <<< "$(find "$HOME/scripts" -type d -not -path '/.' -not -path "*/\.*" -not -path '*__pycache__*' -printf ":%p")")
+#export PATH="/home/jared/.ebcli-virtual-env/executables:$PATH"
 # BEGIN PERSONAL EDITS #
 
 
@@ -49,9 +50,31 @@ function respring_iphone() {
 	killall tcprealy
 }
 
+function git_push(){
+  DIR="$1"
+  MESSAGE="$2"
+  PREV="$PWD"
+
+  cd "$DIR"
+  git add *
+  git commit -m "$MESSAGE"
+  git push origin master
+
+  cd "$PREV"
+}
+
+function example_projects(){
+    PROJECTS=(~/Projects/{dotfiles,thin-mint} ~/scripts)
+    for PROJECT in "${PROJECTS[@]}"; do
+        echo "$PROJECT"
+    done
+}
 
 function bak_pref() {
+    usb_devices="$(awk '{ s = ""; for (i = 7; i <= NF; i++) s = s $i " "; print s }' <<< "$(lsusb)" | sort | uniq)"
 	prev="$PWD"
+
+
 	[[ -d ~/Projects/dotfiles ]] || exit
 	# shell
 	cp -ar ~/.zshrc ~/Projects/dotfiles/shell/zshrc
@@ -72,12 +95,12 @@ function bak_pref() {
 	git commit -m "Automatically backing up scripts"
 	git push origin master
 	cd "$prev"
-        echo ""$BLUE"Project: installed pkgs"$NOCOLOR""
-        cd ~/Projects/thin-mint/
-        list_installed
-        git add *
-        git commit -m "Automatically backing up installed packages"
-        git push origin master
+    echo ""$BLUE"Project: installed pkgs"$NOCOLOR""
+    cd ~/Projects/thin-mint/
+    list_installed
+    git add *
+    git commit -m "Automatically backing up installed packages"
+    git push origin master
 
 }
 
