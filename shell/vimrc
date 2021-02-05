@@ -31,14 +31,26 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'dkarter/bullets.vim'
 Plugin 'tomasiser/vim-code-dark'
+Plugin 'chrisbra/csv.vim'
+Plugin 'vim-scripts/visSum.vim'
 
 " C++
 
 Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
 
+" Flex and Bison
+Plugin 'justinmk/vim-syntax-extra'
+
 " LaTeX
 Plugin 'xuhdev/vim-latex-live-preview'
+
+" HTML
+
+" live preview for html
+Plugin 'turbio/bracey.vim'
+" provides support for expanding abbreviations
+Plugin 'mattn/emmet-vim'
 
 call vundle#end()
 
@@ -62,6 +74,13 @@ set termencoding=utf-8
 
 set showmatch
 set incsearch
+
+" Abbreviations
+ab WQ wq
+ab Wq wq
+ab W  w
+ab Q  q
+
 
 " Moving through the files
 inoremap <S-Tab> <C-d>
@@ -99,16 +118,17 @@ autocmd FileType go nnoremap <buffer> <C-c> :!clear && go run % <Enter>
 
 " Python 
 
-autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python % <Enter>
+autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python_run % <Enter>
 autocmd FileType python nnoremap <buffer> <C-e> :!clear && python_syntax % <Enter>
 autocmd FileType python map <buffer> <C-p> :call flake8#Flake8()<CR>
 
 autocmd FileType cs nnoremap <buffer> <C-c> :!clear && c_sharp_compile % <Enter>
 
 " Web developement
-autocmd FileType html nnoremap <buffer> <C-c> :!firefox % & disown <Enter>
-autocmd FileType php nnoremap <buffer> <C-c> :!clear && php % <Enter>
+autocmd FileType html nnoremap <buffer> <C-c> :Bracey <Enter>
+autocmd FileType php nnoremap <buffer> <C-c> :!clear && php -f % <Enter>
 autocmd FileType javascript nnoremap <buffer> <C-c> :! clear && node % <Enter>
+autocmd FileType typescript,typescriptcommon,typescriptreact nnoremap <buffer> <C-c> :! clear && ts-node % <Enter>
 
 " Statistics
 autocmd FileType r nnoremap <buffer> <C-c> :!clear && r_stat_run % <Enter>
@@ -176,3 +196,19 @@ let g:bullets_enabled_file_types = [
     \ 'text',
     \ 'tex'
     \]
+
+" Remember last position when exiting
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" Highlight TODO, FIXME, NOTE, etc.
+"if has('autocmd') && v:version > 701
+    "augroup todo
+        "autocmd!
+        "autocmd Syntax * call matchadd(
+                    "\ 'Debug',
+                    "\ '\v\W\zs<(NOTE|INFO|IDEA|TODO|FIXME|CHANGED|XXX|BUG|HACK|TRICKY)>'
+                    "\ )
+    "augroup END
+"endif

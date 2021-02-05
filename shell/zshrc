@@ -265,7 +265,7 @@ alias ga="cd ~/Applications"
 alias gai="cd ~/Applications/Cydia\ Impactor"
 alias cdd="cd ~/Desktop"
 #alias cdds="cd '$(find ~/Desktop -maxdepth 1 | while read line; do [[ -L "$line" ]] && echo "$line"; done)'"
-alias cdds="cd ~/Desktop/Fall-2020/"
+alias cdds="cd ~/Desktop/Spring-2021/"
 
 alias gp="cd ~/Projects"
 alias gu="cd ~/Projects/university"
@@ -416,3 +416,15 @@ xdg-mime default pix.desktop image/png
 xdg-mime default pix.desktop image/jpg 
 xdg-mime default pix.desktop image/jpeg 
 xdg-mime default pix.desktop image/gif 
+
+function nkt(){
+    # i am lazy; new kernel template
+    vared -p "Title: " -c title
+    title="$(sed 's/\ /_/g' <<< "$title")"
+    DEST=~/Projects/OS-Toolbox/assignments/"$title"
+    mkdir "$DEST"
+    cp ~/Projects/OS-Toolbox/templates/main_template.c "$DEST"/main.c
+    cp ~/Projects/OS-Toolbox/templates/Makefile "$DEST"/Makefile
+    cd "$DEST"
+    echo "[INFO] Created project $title"
+}
