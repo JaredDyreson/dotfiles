@@ -22,6 +22,8 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Vimjas/vim-python-pep8-indent'
 Plugin 'vim-python/python-syntax'
+Plugin 'skywind3000/vim-rt-format'
+Plugin 'Chiel92/vim-autoformat'
 
 " Plugin 'nathanaelkane/vim-indent-guides'
 
@@ -38,6 +40,7 @@ Plugin 'vim-scripts/visSum.vim'
 
 Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
+Plugin 'rhysd/vim-clang-format'
 
 " Flex and Bison
 Plugin 'justinmk/vim-syntax-extra'
@@ -67,9 +70,9 @@ let g:python_highlight_all = 1
 autocmd FileType vim let b:vcm_tab_complete = 'vim'
 
 "autocmd BufRead,BufNewFile * setlocal tabstop=2 shiftwidth=2
-" :set tabstop=2 shiftwidth=2 expandtab | retab  
-set number 
-set encoding=utf-8 
+" :set tabstop=2 shiftwidth=2 expandtab | retab
+set number
+set encoding=utf-8
 set termencoding=utf-8
 
 set showmatch
@@ -96,9 +99,9 @@ let &t_EI .= "\<Esc>[?2004l"
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
+    set pastetoggle=<Esc>[201~
+    set paste
+    return ""
 endfunction
 
 " Text Processing
@@ -112,15 +115,20 @@ set autowrite
 autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
 autocmd FileType tex nnoremap <buffer> <C-c> :LLPStartPreview <Enter>
 autocmd FileType tex nnoremap <buffer> <C-e> :!clear && make_run_latex "%" <Enter>
-"autocmd FileType tex nnoremap <buffer> <C-c> :!clear && make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
 autocmd FileType go nnoremap <buffer> <C-c> :!clear && go run % <Enter>
 
-" Python 
+" C/C++ Formatting
+autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
+nmap <Leader>C :ClangFormatAutoToggle<CR>
+
+" Python
 
 autocmd FileType python nnoremap <buffer> <C-c> :!clear && chmod +x "%" && python_run % <Enter>
 autocmd FileType python nnoremap <buffer> <C-e> :!clear && python_syntax % <Enter>
 autocmd FileType python map <buffer> <C-p> :call flake8#Flake8()<CR>
+au BufWrite *.py :Autoformat
 
 autocmd FileType cs nnoremap <buffer> <C-c> :!clear && c_sharp_compile % <Enter>
 
@@ -147,7 +155,7 @@ autocmd FileType cpp set shiftwidth=2
 
 " Python Code formatting
 
-let g:flake8_show_in_file=1 
+let g:flake8_show_in_file=1
 let g:flake8_quickfix_location="vertical topleft"
 let g:flake8_quickfix_height=75
 
@@ -164,9 +172,11 @@ map <leader><leader> <Esc>/<++><Enter>"_c4l
 
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+" Fix misspelled words automatically
+imap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" : "\<TAB>"
+\ pumvisible() ? "\<C-n>" : "\<TAB>"
 
 filetype plugin on
 autocmd FileType tex,rmd,markdown exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
@@ -195,20 +205,9 @@ let g:bullets_enabled_file_types = [
     \ 'markdown',
     \ 'text',
     \ 'tex'
-    \]
+\]
 
 " Remember last position when exiting
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-
-" Highlight TODO, FIXME, NOTE, etc.
-"if has('autocmd') && v:version > 701
-    "augroup todo
-        "autocmd!
-        "autocmd Syntax * call matchadd(
-                    "\ 'Debug',
-                    "\ '\v\W\zs<(NOTE|INFO|IDEA|TODO|FIXME|CHANGED|XXX|BUG|HACK|TRICKY)>'
-                    "\ )
-    "augroup END
-"endif

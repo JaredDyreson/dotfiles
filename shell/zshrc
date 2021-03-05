@@ -79,6 +79,7 @@ function bak_pref() {
 	# shell
 	cp -ar ~/.zshrc ~/Projects/dotfiles/shell/zshrc
 	cp -ar ~/.vimrc ~/Projects/dotfiles/shell/vimrc
+    cp -ar ~/.vim/spell/en.utf-8.add ~/Projects/dotfiles/shell/ # user defined words
 
 	# terminal
 
@@ -102,6 +103,28 @@ function bak_pref() {
     git commit -m "Automatically backing up installed packages"
     git push origin master
 
+}
+
+function gba_bak() {
+    [[ "$1" == "ez" ]] 
+    SD_CARD="/run/media/jared/00C5-2440"
+    BACKUP_DEST="/run/media/jared/Packages/ez_flash"
+    CURRENT="$(date +"%Y-%m-%d")"
+
+    OUTPUT="$BACKUP_DEST/$CURRENT"
+
+    [[ ! -d "$SD_CARD"  || ! -d "$BACKUP_DEST" ]] && exit
+
+    mkdir -p "$OUTPUT"
+    cp -ar "$SD_CARD"/* "$OUTPUT"
+}
+
+function fix_repo(){
+    git --no-pager diff --name-only --cached | while read line; do
+        ext=$line:t:e
+        [[ "$ext" != "py" ]] && continue
+        vim +silent +'set ts=2 noet | retab! | set et ts=4 | retab' +wqall "$line"
+    done
 }
 
 function upgrade(){
@@ -428,3 +451,24 @@ function nkt(){
     cd "$DEST"
     echo "[INFO] Created project $title"
 }
+
+function gadd(){
+
+    vared -p "Commit: " -c message
+    [[ -d includes && -d src ]] && find includes src -type f -exec vim +ClangFormat +wq {} \;
+
+    find . -type f -name '*.py' -exec autopep8 --in-place --aggressive --aggressive {} \;
+
+    git add *
+    git commit -m "$message"
+    git push origin
+}
+
+function cform() {
+    find includes src -type f -name '*.c' | while read file; do
+        # echo "[INFO] Processing $file"
+        #vim --not-a-term +ClangFormat +wq "$file"
+        clang-format -i "$file" -style=Google --verbose
+    done
+}
+
