@@ -74,6 +74,10 @@ function bak_pref() {
     usb_devices="$(awk '{ s = ""; for (i = 7; i <= NF; i++) s = s $i " "; print s }' <<< "$(lsusb)" | sort | uniq)"
 	prev="$PWD"
 
+    # current projects
+
+    # LANG=C find ~/Projects -type d -name '.git' | while read dir; do egrep -o "https://github.com/\\w+/\\w+.git" "$dir"/config; done | sort >/dev/null
+
 
 	[[ -d ~/Projects/dotfiles ]] || exit
 	# shell
@@ -314,6 +318,8 @@ alias sz="source ~/.zshrc"
 alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
 alias vx="vim ~/.Xresources"
+alias rgrep="grep -r"
+alias dc="cd"
 
 ## SYSTEM MAINTAINCE ##
 
