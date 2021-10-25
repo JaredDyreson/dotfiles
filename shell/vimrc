@@ -18,6 +18,8 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
+" Autocomplete
+Plugin 'neoclide/coc.nvim'
 " Python
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Vimjas/vim-python-pep8-indent'
@@ -48,6 +50,7 @@ Plugin 'justinmk/vim-syntax-extra'
 
 " LaTeX
 Plugin 'xuhdev/vim-latex-live-preview'
+Plugin 'lervag/vimtex'
 
 " HTML
 
@@ -55,6 +58,13 @@ Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'turbio/bracey.vim'
 " provides support for expanding abbreviations
 Plugin 'mattn/emmet-vim'
+Plugin 'alvan/vim-closetag'
+Plugin 'prettier/vim-prettier'
+
+" JavaScript
+"
+Plugin 'yuezk/vim-js'
+Plugin 'maxmellon/vim-jsx-pretty'
 
 call vundle#end()
 
@@ -70,6 +80,15 @@ let g:python_highlight_all = 1
 
 autocmd FileType vim let b:vcm_tab_complete = 'vim'
 
+" HTML Formatting
+
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'false'
+
+let g:prettier#autoformat = 0
+au BufWrite *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue PrettierAsync
+
 " Used for looking up a header for C++
 
 function GetVisualSelection()
@@ -83,13 +102,24 @@ function GetVisualSelection()
     endif
     let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
     let lines[0] = lines[0][column_start - 1:]
-    let structure = matchlist(lines[0], '\w\+\:\:\(\w\+\)')[1]
-    return structure
+    return lines[0]
 endfunction
 
 function OpenCPPSourceFile()
     let fileName = GetVisualSelection()
-    exe 'vsplit ' . '/usr/include/c++/10.2.0/' . fileName
+    let structure = matchlist(fileName, '\w\+\:\:\(\w\+\)')[1]
+    "let path = matchlist(fileName, '\w\+')
+    exe 'vsplit ' . '/usr/include/c++/10.2.0/' . structure
+    "if(structure)
+    "endif
+
+endfunction
+
+function OpenCSSDocumentation()
+    let FunctionName = GetVisualSelection()
+    let baseUrl = "https://developer.mozilla.org/en-US/docs/Web/CSS/"
+    exe "!firefox " . baseUrl . FunctionName
+
 endfunction
 
 "autocmd BufRead,BufNewFile * setlocal tabstop=2 shiftwidth=2
@@ -109,6 +139,9 @@ ab WQ wq
 ab Wq wq
 ab W  w
 ab Q  q
+ab Wqal wqal
+ab WQal wqal
+ab wQal wqal
 
 
 " Moving through the files
@@ -143,6 +176,7 @@ vnoremap ` :normal @a<CR>
 set autowrite
 
 autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
+"autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && bettens_build % <Enter>
 autocmd FileType tex nnoremap <buffer> <C-c> :LLPStartPreview <Enter>
 autocmd FileType tex nnoremap <buffer> <C-e> :!clear && make_run_latex "%" <Enter>
 autocmd FileType java nnoremap <buffer> <C-c> :!clear && jcomp % <Enter>
@@ -152,6 +186,7 @@ autocmd FileType go nnoremap <buffer> <C-c> :!clear && go run % <Enter>
 autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 autocmd FileType c,cpp vnoremap <buffer><Leader>lf :call OpenCPPSourceFile() <CR>
+autocmd FileType c,cpp vnoremap <buffer><S-l> :call OpenCPPSourceFile() <CR>
 nmap <Leader>C :ClangFormatAutoToggle<CR>
 "au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
 
@@ -172,6 +207,9 @@ autocmd FileType typescript,typescriptcommon,typescriptreact nnoremap <buffer> <
 
 " Statistics
 autocmd FileType r nnoremap <buffer> <C-c> :!clear && r_stat_run % <Enter>
+
+" CSS
+autocmd FileType css vnoremap <buffer><Leader>lf :call OpenCSSDocumentation() <CR>
 
 " Text processing
 autocmd FileType rmd nnoremap <buffer> <C-c> :!clear && compile_r_markdown % <Enter>
