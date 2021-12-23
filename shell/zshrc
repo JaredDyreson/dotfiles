@@ -507,6 +507,6 @@ export LESS_TERMCAP_ue=$default
 export LESS_TERMCAP_us=$green
 
 
-export GIT_TOK="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"
+export GIT_TOK="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"
 
 export TEXMFHOME="/home/jared/texmf/"

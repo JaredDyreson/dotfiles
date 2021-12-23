@@ -18,13 +18,13 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Python
-Plug 'vim-scripts/indentpython.vim'
+"Plug 'vim-scripts/indentpython.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'vim-python/python-syntax'
 Plug 'skywind3000/vim-rt-format'
 Plug 'Chiel92/vim-autoformat'
 
-" Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " Ease of use
 Plug 'jiangmiao/auto-pairs'
@@ -45,6 +45,15 @@ Plug 'webastien/vim-ctags'
 " Flex and Bison
 Plug 'justinmk/vim-syntax-extra'
 
+" Rust
+Plug 'rust-lang/rust.vim'
+Plug 'dense-analysis/ale'
+Plug 'sheerun/vim-polyglot'
+
+
+" APL
+Plug 'PyGamer0/vim-apl'
+
 " LaTeX
 Plug 'xuhdev/vim-latex-live-preview'
 Plug 'lervag/vimtex'
@@ -57,6 +66,7 @@ Plug 'turbio/bracey.vim'
 Plug 'mattn/emmet-vim'
 Plug 'alvan/vim-closetag'
 Plug 'prettier/vim-prettier'
+Plug 'tpope/vim-markdown'
 
 " JavaScript
 "
@@ -65,7 +75,7 @@ Plug 'maxmellon/vim-jsx-pretty'
 
 call plug#end()
 
-syntax on
+"syntax on
 syntax enable
 set t_Co=256
 set autoindent
@@ -76,6 +86,7 @@ set expandtab
 let g:python_highlight_all = 1
 
 autocmd FileType vim let b:vcm_tab_complete = 'vim'
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 
 " HTML Formatting
 
@@ -173,6 +184,7 @@ vnoremap ` :normal @a<CR>
 set autowrite
 
 autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && c_lang_make_run % <Enter>
+autocmd FileType rust nnoremap <buffer> <C-c> :!clear && cargo build && cargo run <Enter>
 "autocmd FileType c,cpp nnoremap <buffer> <C-c> :!clear && bettens_build % <Enter>
 autocmd FileType tex nnoremap <buffer> <C-c> :LLPStartPreview <Enter>
 autocmd FileType tex nnoremap <buffer> <C-e> :!clear && make_run_latex "%" <Enter>
@@ -185,6 +197,7 @@ autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 autocmd FileType c,cpp vnoremap <buffer><Leader>lf :call OpenCPPSourceFile() <CR>
 autocmd FileType c,cpp vnoremap <buffer><S-l> :call OpenCPPSourceFile() <CR>
 nmap <Leader>C :ClangFormatAutoToggle<CR>
+au BufWrite *.rs :RustFmt
 "au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
 
 " Python
@@ -246,7 +259,7 @@ imap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 inoremap <silent><expr> <TAB>
 \ pumvisible() ? "\<C-n>" : "\<TAB>"
 
-filetype plugin on
+filetype plugin indent on
 autocmd FileType tex,rmd,markdown exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
 set completeopt=menuone,longest,preview
 set complete+=k
