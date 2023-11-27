@@ -1,0 +1,71 @@
+! Links
+! https://github.com/Thadz/my-urxvt-dotfile/blob/master/.Xresources
+! https://github.com/lgaggini/dotfiles/blob/master/.Xresources
+URxvt*altSendsEscape: true
+
+URxvt.font: xft:bitstream vera sans mono:size=12
+
+!! black dark/light
+*color0:                          #222D31
+*color8:                          #585858
+
+!! red dark/light
+*color1:                          #eb342d
+*color9:                          #eb342d
+
+!! green dark/light
+*color2:                          #13d113
+*color10:                         #13d113
+
+!! yellow dark/light
+*color3:                          #f7ca88
+*color11:                         #f7ca88
+
+!! blue dark/light
+*color4:                          #1383ad
+*color12:                         #1383ad
+
+!! magenta dark/light
+*color5:                          #ba8baf
+*color13:                         #ba8baf
+
+!! cyan dark/light
+*color6:                          #2f67c2
+*color14:                         #2f67c2
+
+!! white dark/light
+*color7:                          #a69494
+*color15:                         #a69494
+
+
+URxvt.foreground: #b4e1fd
+URxvt.depth:                      32
+URxvt.background:                 [50]#202124
+URxvt*scrollBar:                  false
+URxvt*background:                 black
+URxvt*foreground:                 grey
+URxvt*saveLines:                  5000
+URxvt.cursorUnderline: true
+URxvt.cursorBlink: true
+
+! Copy and Paste
+
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+!  urls
+
+URxvt*.perl-ext-common:         default,matcher,tabbedex,searchable-scrollback,clipboard,url-select,keyboard-select
+URxvt.url-select.launcher: /usr/bin/firefox
+URxvt.underlineURLs: true
+URxvt.urlButton: 1
+URxvt.keysym.M-u: perl:url-select:select_next
+
+URxvt.clipboard.autocopy: true
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+
+URxvt.iso14755: false
+URxvt*geometry: 114x32+360+250 
+URxvt.scrollBar: false
+!URxvt.perl-ext-common: ...,tabbed,...
+Xft.dpi: 130
